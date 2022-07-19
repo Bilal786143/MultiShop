@@ -13,7 +13,7 @@ namespace MultiShop.DataAccess.Infrastructure.IRepository
         Task<Admin> GetAdminById( int id);
         Task<Admin> CreateAdmin(Admin admin);
         Task<Admin> EditAdmin(Admin admin);
-        Task<Admin> DeleteAdmin(int id);
+        Task DeleteAdmin(int id);
 
         
 

@@ -25,16 +25,17 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
             return result.Entity;
         }
 
-        public async Task<Admin> DeleteAdmin(int id)
+        public async Task DeleteAdmin(int id)
         {
             var result =   await _context.Admin.FindAsync(id);
             if (result != null)
             {
                 _context.Admin.Remove(result);
                 await _context.SaveChangesAsync();
+                
 
             }
-            return result;
+            
         }
 
         public async Task<Admin> EditAdmin(Admin admin)
