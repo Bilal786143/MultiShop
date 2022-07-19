@@ -42,7 +42,7 @@ namespace MultiShop.Controllers
                 {
                     if (id == 0)
                     {
-                        return BadRequest();
+                        return BadRequest($"This ID {id} Could not found please enter a valid ID");
                     }
                     else return Ok(await _admin.GetAdminById(id));
 

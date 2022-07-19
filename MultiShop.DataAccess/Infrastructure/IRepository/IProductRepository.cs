@@ -13,6 +13,6 @@ namespace MultiShop.DataAccess.Repository.IRepository
         Task<Product> GetProductById(int id);
         Task<Product> CreateProduct(Product product);
         Task<Product> EditProduct(Product product);
-        Task<Product> DeleteProducts(int id);
+        Task DeleteProducts(int id);
     }
 }

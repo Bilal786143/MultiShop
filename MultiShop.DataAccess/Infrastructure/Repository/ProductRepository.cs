@@ -26,7 +26,7 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
 
         }
 
-        public async Task<Product> DeleteProducts(int id)
+        public async Task DeleteProducts(int id)
         {
             var result = await _dbcontext.Product.FindAsync(id);
             if (result!= null)
@@ -34,7 +34,7 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
                 _dbcontext.Product.Remove(result);
                  await _dbcontext.SaveChangesAsync();
             }
-            return result;
+         
                 }
 
         public async Task<Product> EditProduct(Product product)
