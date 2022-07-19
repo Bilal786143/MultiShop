@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MultiShop.DataAccess.Repository.IRepository
+namespace MultiShop.DataAccess.Infrastructure.IRepository
 {
     public interface IProductRepository
     {

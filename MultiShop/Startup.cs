@@ -29,8 +29,13 @@ namespace MultiShop
         {
             services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddScoped<ICategoryRepository, CategoryRepository>();
 
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<IAdminRepository, AdminRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+
+            services.AddSwaggerGen();
+            
 
             services.AddControllersWithViews();
         }
@@ -41,6 +46,14 @@ namespace MultiShop
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(options =>
+                {
+                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+                    options.RoutePrefix = string.Empty;
+                });
+
+
             }
             else
             {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MultiShop.DataAccess.Data;
-using MultiShop.DataAccess.Repository.IRepository;
+using MultiShop.DataAccess.Infrastructure.IRepository;
 using MultiShop.Models.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -46,8 +46,13 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
 
         public  async Task<Product> GetProductById(int id)
         {
-            var result = await _dbcontext.Product.FindAsync(id);
-            return result;
+            var result = await _dbcontext.Product.FirstOrDefaultAsync(x=>x.Id==id);
+            if (result != null)
+            {
+                return result;
+            }
+            return null;
+            
         }
 
         public async  Task<IEnumerable<Product>> GetProducts()

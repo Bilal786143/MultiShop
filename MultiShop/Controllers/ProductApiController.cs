@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using MultiShop.DataAccess.Repository.IRepository;
+using MultiShop.DataAccess.Infrastructure.IRepository;
 using MultiShop.Models.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,8 @@ using System.Threading.Tasks;
 
 namespace MultiShop.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
+
     [ApiController]
     public class ProductApiController : ControllerBase
     {
@@ -33,7 +34,7 @@ namespace MultiShop.Controllers
             }
             
         }
-        [HttpGet("{ id:int}")]
+        [HttpGet("{id:int}")]
         public async Task<IActionResult> GetProductsById(int id)
         {
             try

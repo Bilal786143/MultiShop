@@ -9,15 +9,14 @@ using System.Threading.Tasks;
 
 namespace MultiShop.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class AdminApiController : ControllerBase
     {
-        public class ProductApiController : ControllerBase
-        {
+        
             private readonly IAdminRepository _admin;
 
-            public ProductApiController(IAdminRepository admin)
+            public AdminApiController(IAdminRepository admin)
             {
                 _admin = admin;
             }
@@ -120,5 +119,5 @@ namespace MultiShop.Controllers
         }
     }
 
-}
+
 
