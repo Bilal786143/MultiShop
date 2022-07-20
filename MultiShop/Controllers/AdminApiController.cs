@@ -21,7 +21,7 @@ namespace MultiShop.Controllers
                 _admin = admin;
             }
             [HttpGet]
-            public async Task<IActionResult> GetProductsList()
+            public async Task<IActionResult> GetAdminList()
             {
                 try
                 {
@@ -35,7 +35,7 @@ namespace MultiShop.Controllers
 
             }
             [HttpGet("{ id:int}")]
-            public async Task<IActionResult> GetProductsById(int id)
+            public async Task<IActionResult> GetAdminById(int id)
             {
                 try
                 {
@@ -53,7 +53,7 @@ namespace MultiShop.Controllers
                 }
             }
             [HttpPost]
-            public async Task<IActionResult> CreateProducts(Admin admin )
+            public async Task<IActionResult> CreateAdmin(Admin admin )
             {
                 try
                 {
@@ -72,7 +72,7 @@ namespace MultiShop.Controllers
 
             }
             [HttpPost]
-            public async Task<IActionResult> EditProducts(Admin admin)
+            public async Task<IActionResult> EditAdmin(Admin admin)
             {
                 try
                 {
@@ -95,7 +95,7 @@ namespace MultiShop.Controllers
 
             }
             [HttpDelete("{ id:int}")]
-            public IActionResult DeleteProducts(int id)
+            public IActionResult DeleteAdmin(int id)
             {
                 try
                 {
