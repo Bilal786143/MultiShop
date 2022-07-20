@@ -39,12 +39,13 @@ namespace MultiShop.Controllers
         {
             try
             {
-                var result = await _categoryRepository.GetCategoryById(id);
-                if (result == null)
+                bool isExist = _categoryRepository.IsCategoryExist(id);
+                if (isExist == false)
                 {
                     return NotFound();
                 }
-                return Ok(result);
+
+                return Ok(await _categoryRepository.GetCategoryById(id));
             }
             catch (Exception)
             {

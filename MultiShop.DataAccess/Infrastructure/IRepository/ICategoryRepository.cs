@@ -12,8 +12,10 @@ namespace MultiShop.DataAccess.Infrastructure.IRepository
         Task<IEnumerable<Category>> GetAllCategory();
         Task<Category> GetCategoryById(int id);
         Task<Category> CreateCategory(Category category);
-        Task DeleteCategoryById(int id);
+        Task<bool> DeleteCategoryById(int id);
         Task<Category> UpdateCategory(Category category);
+
+        bool IsCategoryExist(int id);
 
 
     }

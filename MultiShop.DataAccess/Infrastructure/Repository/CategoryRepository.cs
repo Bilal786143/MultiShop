@@ -43,18 +43,27 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
         }
 
         
-        public async Task DeleteCategoryById(int id)
+        public async Task<bool> DeleteCategoryById(int id)
         {
+            bool isExist = IsCategoryExist(id);
+            if (!isExist)
+            {
+                return false;
+            }
 
             var result = await _context.Category.FirstOrDefaultAsync(x => x.Id == id);
 
-            if(result != null)
-            {
-                _context.Category.Remove(result);
-                await _context.SaveChangesAsync();
-            }
-        
+            _context.Category.Remove(result);
+            await _context.SaveChangesAsync();
+
+            return true;
         }
+
+        public bool IsCategoryExist(int id)
+        {
+          return  _context.Category.Any(x => x.Id == id);
+        }
+
         public async Task<Category> UpdateCategory(Category category)
         {
             var result = await _context.Category.FirstOrDefaultAsync(x => x.Id == category.Id);
