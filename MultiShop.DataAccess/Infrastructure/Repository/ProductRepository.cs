@@ -26,16 +26,22 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
 
         }
 
-        public async Task DeleteProducts(int id)
+        public async Task<bool> DeleteProducts(int id)
         {
-            var result = await _dbcontext.Product.FindAsync(id);
-            if (result!= null)
+            bool isExist = IsProductExist(id);
+            if (!isExist)
             {
-                _dbcontext.Product.Remove(result);
-                 await _dbcontext.SaveChangesAsync();
+
+                return false;
+
+
             }
-         
-                }
+
+            var result=await _dbcontext.Product.FirstOrDefaultAsync(x=>x.Id==id);
+            _dbcontext.Product.Remove(result);
+            await _dbcontext.SaveChangesAsync();
+            return true;
+        }
 
         public async Task<Product> EditProduct(Product product)
         {
@@ -54,7 +60,7 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
             return null;
             
         }
-        public bool IsExist(int id)
+        public bool IsProductExist(int id)
         {
             return _dbcontext.Product.Any(x => x.Id == id);
         }
