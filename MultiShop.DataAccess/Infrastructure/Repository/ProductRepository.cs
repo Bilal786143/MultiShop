@@ -18,13 +18,14 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
         {
             _dbcontext = dbcontext;
         }
-        public  async Task<Product> CreateProduct(Product product)
+        public async Task<Product> CreateProduct(Product product)
         {
-            var result = await _dbcontext.AddAsync(product);
-            await  _dbcontext.SaveChangesAsync();
-            return result.Entity;
+             _dbcontext.Product.Add(product);
+            await _dbcontext.SaveChangesAsync();
+            return product;
 
         }
+
 
         public async Task<bool> DeleteProducts(int id)
         {
@@ -37,7 +38,7 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
 
             }
 
-            var result=await _dbcontext.Product.FirstOrDefaultAsync(x=>x.Id==id);
+            var result = await _dbcontext.Product.FirstOrDefaultAsync(x => x.Id == id);
             _dbcontext.Product.Remove(result);
             await _dbcontext.SaveChangesAsync();
             return true;
@@ -45,30 +46,32 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
 
         public async Task<Product> EditProduct(Product product)
         {
-          _dbcontext.Update(product);
+            _dbcontext.Product.Update(product);
             await _dbcontext.SaveChangesAsync();
             return product;
         }
 
-        public  async Task<Product> GetProductById(int id)
+        public async Task<Product> GetProductById(int id)
         {
-            var result = await _dbcontext.Product.FirstOrDefaultAsync(x=>x.Id==id);
+            var result = await _dbcontext.Product.FirstOrDefaultAsync(x => x.Id == id);
             if (result != null)
             {
                 return result;
             }
             return null;
-            
+
         }
         public bool IsProductExist(int id)
         {
             return _dbcontext.Product.Any(x => x.Id == id);
         }
 
-        public async  Task<IEnumerable<Product>> GetProducts()
+        public async Task<IEnumerable<Product>> GetProducts()
         {
-             var result =   await _dbcontext.Product.ToListAsync();
+            var result = await _dbcontext.Product.ToListAsync();
             return result;
         }
+
+
     }
 }

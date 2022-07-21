@@ -53,7 +53,7 @@ namespace MultiShop.Controllers
             }
         }
         [HttpPost]
-        public async Task<IActionResult> CreateProducts(Product product)
+        public async Task <IActionResult> CreateProducts(Product product)
         {
             try
             {
@@ -62,16 +62,16 @@ namespace MultiShop.Controllers
                     return NotFound();
                 }
                 else return
-               Ok(await _products.CreateProduct(product));
+               Ok(  await _products.CreateProduct(product));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                return StatusCode(StatusCodes.Status500InternalServerError, "Server is Not Rresponding");
+              return StatusCode(StatusCodes.Status500InternalServerError, "Server is Not Rresponding");
             }
             
         }
-        [HttpPost]
+        [HttpPut]
         public async Task<IActionResult> EditProducts(Product product)
         {
             try
