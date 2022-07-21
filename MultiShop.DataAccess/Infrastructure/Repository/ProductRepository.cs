@@ -54,6 +54,10 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
             return null;
             
         }
+        public bool IsExist(int id)
+        {
+            return _dbcontext.Product.Any(x => x.Id == id);
+        }
 
         public async  Task<IEnumerable<Product>> GetProducts()
         {

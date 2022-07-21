@@ -14,5 +14,6 @@ namespace MultiShop.DataAccess.Infrastructure.IRepository
         Task<Product> CreateProduct(Product product);
         Task<Product> EditProduct(Product product);
         Task DeleteProducts(int id);
+        bool IsExist(int id);
     }
 }
