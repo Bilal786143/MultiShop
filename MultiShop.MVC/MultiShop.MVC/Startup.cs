@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MultiShop.Mvc.DataAccess.Infrastructure.IRepository;
+using MultiShop.Mvc.DataAccess.Infrastructure.Repository;
+using MultiShop.Mvc.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +26,13 @@ namespace MultiShop.MVC
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpClient<ICategoryConsumeApi, CategoryConsumeApi>();
+            services.AddHttpClient<IProducts, Products>();
             services.AddControllersWithViews();
+
+            services.AddScoped<ICategoryConsumeApi, CategoryConsumeApi>();
+            services.AddScoped<IProducts, Products>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
