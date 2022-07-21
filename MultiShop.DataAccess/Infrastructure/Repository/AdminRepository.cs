@@ -20,7 +20,7 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
         }
         public async Task<Admin> CreateAdmin(Admin admin)
         {
-          var result =  await  _context.Admin.AddAsync(admin);
+            var result = await  _context.Admin.AddAsync(admin);
             await _context.SaveChangesAsync();
             return result.Entity;
         }
