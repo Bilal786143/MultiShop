@@ -108,8 +108,8 @@ namespace MultiShop.Controllers
         {
             try
             {
-                var result = await _categoryRepository.GetCategoryById(id);
-                if (result == null)
+                bool result = _categoryRepository.IsCategoryExist(id);
+                if (!result)
                 {
                     return NotFound($"Category With Requesting Details (Category Id: {id}) to Delete Is not found");
                 }
