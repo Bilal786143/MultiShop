@@ -94,17 +94,17 @@ namespace MultiShop.Controllers
             
 
         }
-        [HttpDelete("{ id:int}")]
-        public IActionResult DeleteProducts(int id)
+        [HttpDelete("{id:int}")]
+        public async  Task<IActionResult> DeleteProducts(int id)
         {
             try
             {
                 
-                var result = _products.GetProductById(id);
+                var result =  await _products.GetProductById(id);
                 if (result != null) 
                 {
                     
-                    return Ok(_products.DeleteProducts(id));
+                    return Ok(await _products.DeleteProducts(id));
                 }
                 return NotFound();
 

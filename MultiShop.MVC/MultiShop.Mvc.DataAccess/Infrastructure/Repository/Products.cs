@@ -22,27 +22,18 @@ namespace MultiShop.Mvc.DataAccess.Infrastructure.Repository
 
         public async Task<Product> CreateProduct(Product product)
         {
-            try
-            {
                 Product productsCreate = null;
                 _httpClient.BaseAddress = new Uri("https://localhost:44398/");
-                //var response = await _httpClient.PostAsJsonAsync<Product>("api/ProductApi/CreateProducts", product);
-                var response = _httpClient.PostAsync("api/ProductApi/CreateProducts", new StringContent(
-   new JavaScriptSerializer().Serialize(product), Encoding.UTF8, "application/json")).Result;
+                var response = await _httpClient.PostAsJsonAsync<Product>("api/ProductApi/CreateProducts", product);
+                
                 if (response.IsSuccessStatusCode)
                 {
                     var display = response.Content.ReadAsStringAsync().Result;
                     productsCreate = JsonConvert.DeserializeObject<Product>(display);
 
                 }
-                return productsCreate;
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
-
+            return productsCreate;
+            
 
         }
 
@@ -50,7 +41,7 @@ namespace MultiShop.Mvc.DataAccess.Infrastructure.Repository
         {
 
             _httpClient.BaseAddress = new Uri("https://localhost:44398/");
-            var response = _httpClient.DeleteAsync("ProductApi?id" + id.ToString());
+            var response = _httpClient.DeleteAsync("api/ProductApi/DeleteProducts/"+ id.ToString());
             response.Wait();
             var test = response.Result;
             if (test.IsSuccessStatusCode)
@@ -64,7 +55,7 @@ namespace MultiShop.Mvc.DataAccess.Infrastructure.Repository
         {
             Product productsEdit = null;
             _httpClient.BaseAddress = new Uri("https://localhost:44398/");
-            var response = await _httpClient.PutAsJsonAsync<Product>("ProductApi", product);
+            var response = await _httpClient.PutAsJsonAsync<Product>("api/ProductApi/EditProducts", product);
             if (response.IsSuccessStatusCode)
             {
                 var display = response.Content.ReadAsStringAsync().Result;
@@ -78,7 +69,7 @@ namespace MultiShop.Mvc.DataAccess.Infrastructure.Repository
         {
             List<Product> products = new List<Product>();
             _httpClient.BaseAddress = new Uri("https://localhost:44398/");
-            var response = await _httpClient.GetAsync("ProductApi");
+            var response = await _httpClient.GetAsync("api/ProductApi/GetProductsList");
             if (response.IsSuccessStatusCode)
             {
                 var display = response.Content.ReadAsStringAsync().Result;
@@ -92,7 +83,7 @@ namespace MultiShop.Mvc.DataAccess.Infrastructure.Repository
         {
             Product product = null;
             _httpClient.BaseAddress = new Uri("https://localhost:44398/");
-            var response = await _httpClient.GetAsync("ProductApi?id" + id.ToString());
+            var response = await _httpClient.GetAsync("api/ProductApi/GetProductsById/" + id.ToString());
             if (response.IsSuccessStatusCode)
             {
                 var display = response.Content.ReadAsStringAsync().Result;
