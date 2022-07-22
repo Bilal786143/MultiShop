@@ -66,9 +66,10 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
 
         public async Task<Category> UpdateCategory(Category category)
         {
-            var result = await _context.Category.FirstOrDefaultAsync(x => x.Id == category.Id);
-            if (result != null)
+            bool isExist = IsCategoryExist(category.Id);
+            if (isExist)
             {
+                var result = await _context.Category.FirstOrDefaultAsync(x => x.Id == category.Id);
                 result.Id = category.Id;
                 result.Name = category.Name;
                 await _context.SaveChangesAsync();

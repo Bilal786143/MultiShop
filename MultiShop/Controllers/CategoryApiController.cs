@@ -76,19 +76,19 @@ namespace MultiShop.Controllers
         }
 
 
-        [HttpPut("{id:int}")]
-        public async Task<ActionResult<Category>> UpdateCategoryById(int id,Category category)
+        [HttpPost]
+        public async Task<ActionResult<Category>> UpdateCategory(Category category)
         {
             try
             {
-                if (id != category.Id)
+                //if (id != category.Id)
+                //{
+                //    return BadRequest("Requewsting Category With id is Not Found So It's Can't be Updated");
+                //}
+                bool result =  _categoryRepository.IsCategoryExist(category.Id);
+                if(!result)
                 {
-                    return BadRequest("Requewsting Category With id is Not Found So It's Can't be Updated");
-                }
-                var result = await _categoryRepository.GetCategoryById(id);
-                if(result==null)
-                {
-                    return NotFound($"Category With Requesting Details Like ID : {id} not found");
+                    return NotFound($"Category With Requesting Details Like ID : {category.Id} not found");
                 }
 
                 return await _categoryRepository.UpdateCategory(category);
