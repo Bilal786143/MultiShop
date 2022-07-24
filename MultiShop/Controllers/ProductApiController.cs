@@ -64,7 +64,7 @@ namespace MultiShop.Controllers
                 else return
                Ok(  await _products.CreateProduct(product));
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
               return StatusCode(StatusCodes.Status500InternalServerError, "Server is Not Rresponding");

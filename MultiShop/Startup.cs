@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -33,6 +34,16 @@ namespace MultiShop
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IAdminRepository, AdminRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
+
+            //identity User
+            services.AddIdentity<IdentityUser, IdentityRole>().
+                AddEntityFrameworkStores<ApplicationDbContext>();
+
+
+            //register IuserAccountRepository and UserAccountRepository
+            services.AddScoped<IUserAccountRepository, UserAccountRepository>();
+
+
 
             services.AddSwaggerGen();
             
