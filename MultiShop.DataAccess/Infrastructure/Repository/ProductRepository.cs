@@ -20,10 +20,9 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
         }
         public async Task<Product> CreateProduct(Product product)
         {
-             _dbcontext.Product.Add(product);
+            await _dbcontext.Product.AddAsync(product);
             await _dbcontext.SaveChangesAsync();
             return product;
-
         }
 
 

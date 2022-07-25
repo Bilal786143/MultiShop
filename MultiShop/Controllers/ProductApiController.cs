@@ -21,18 +21,18 @@ namespace MultiShop.Controllers
             _products = products;
         }
         [HttpGet]
-        public async Task <IActionResult> GetProductsList()
+        public async Task<IActionResult> GetProductsList()
         {
             try
             {
-               return Ok( await _products.GetProducts());
+                return Ok(await _products.GetProducts());
             }
             catch (Exception)
             {
 
                 return StatusCode(StatusCodes.Status404NotFound, "Content Not Found ");
             }
-            
+
         }
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetProductsById(int id)
@@ -53,7 +53,7 @@ namespace MultiShop.Controllers
             }
         }
         [HttpPost]
-        public async Task <IActionResult> CreateProducts(Product product)
+        public async Task<ActionResult<Product>> CreateProducts(Product product)
         {
             try
             {
@@ -61,15 +61,15 @@ namespace MultiShop.Controllers
                 {
                     return NotFound();
                 }
-                else return
-               Ok(  await _products.CreateProduct(product));
+
+                return Ok(await _products.CreateProduct(product));
             }
             catch (Exception)
             {
 
-              return StatusCode(StatusCodes.Status500InternalServerError, "Server is Not Rresponding");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Server is Not Rresponding");
             }
-            
+
         }
         [HttpPut]
         public async Task<IActionResult> EditProducts(Product product)
@@ -83,7 +83,7 @@ namespace MultiShop.Controllers
                 }
                 else
                 {
-                    return Ok ( await _products.EditProduct(product));
+                    return Ok(await _products.EditProduct(product));
                 }
             }
             catch (Exception)
@@ -91,19 +91,19 @@ namespace MultiShop.Controllers
 
                 return StatusCode(StatusCodes.Status500InternalServerError, "Server is not responding !!!");
             }
-            
+
 
         }
         [HttpDelete("{id:int}")]
-        public async  Task<IActionResult> DeleteProducts(int id)
+        public async Task<IActionResult> DeleteProducts(int id)
         {
             try
             {
-                
-                var result =  await _products.GetProductById(id);
-                if (result != null) 
+
+                var result = await _products.GetProductById(id);
+                if (result != null)
                 {
-                    
+
                     return Ok(await _products.DeleteProducts(id));
                 }
                 return NotFound();
@@ -113,7 +113,7 @@ namespace MultiShop.Controllers
             catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Server is not responding !!!");
-              
+
             }
         }
     }
