@@ -25,7 +25,10 @@ namespace MultiShop.Models.Request
 
         [Display(Name = "Product Discount Price (Optional)")]
         public decimal? DiscountPrice { get; set; }
-        
+
+        [Required(ErrorMessage = "Product Image Is Required"), Display(Name = "Product Image")]
+        public string ProductImage { get; set; }
+
         public int CatFId { get; set; }
     } 
 }

@@ -28,6 +28,7 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
                 Description = request.Description,
                 SalePrice = request.SalePrice,
                 DiscountPrice = request.DiscountPrice,
+                ProductImage=request.ProductImage
             };
             await _dbcontext.Product.AddAsync(product);
             await _dbcontext.SaveChangesAsync();
@@ -57,6 +58,7 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
                 Description = request.Description,
                 SalePrice = request.SalePrice,
                 DiscountPrice = request.DiscountPrice,
+                ProductImage=request.ProductImage
             };
             _dbcontext.Product.Update(product);
             await _dbcontext.SaveChangesAsync();
