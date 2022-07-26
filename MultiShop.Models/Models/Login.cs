@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MultiShop.Models.ViewModels
+namespace MultiShop.Models.Models
 {
     [Keyless]
      public class Login

@@ -24,23 +24,20 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
 
 
         public async Task<IdentityResult> CreateUserAsync(User user)
-        { 
+        {
             var NewUser = new RegisterNewUser()
             {
                 Name = user.Name,
                 Address = user.Address,
                 Password = user.Password,
                 PhoneNumber = user.PhoneNumber,
-               UserName = user.Email,
+                UserName = user.Email,
                 Email = user.Email,
                 ConfirmPasswrd = user.ConfirmPasswrd
 
                 //Name = .Name,
                 //Address = newUser.Address,
                 //PhoneNumber=newUser.PhoneNumber,
-                //Email = newUser.Email,
-                //UserName = newUser.Email
-                //PhoneNumber = newUser.PhoneNumber,
                 //Email = newUser.Email,
                 //UserName = newUser.Email
             };
@@ -54,10 +51,9 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
             }
             return null;
 
-         
 
 
-           
+
         }
 
         public async Task<SignInResult> Login(Login login)

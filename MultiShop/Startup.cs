@@ -9,7 +9,7 @@ using Microsoft.Extensions.Hosting;
 using MultiShop.DataAccess.Data;
 using MultiShop.DataAccess.Infrastructure.IRepository;
 using MultiShop.DataAccess.Infrastructure.Repository;
-using MultiShop.Models.ViewModels;
+using MultiShop.Models.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

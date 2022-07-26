@@ -20,7 +20,7 @@ namespace MultiShop.Controllers
 
         }
         [HttpPost]
-        public async Task<ActionResult>Register(User user)
+        public async Task<ActionResult> Register(User user)
         {
 
             try
@@ -45,7 +45,7 @@ namespace MultiShop.Controllers
 
             }
             return null;
-           
+
 
         }
         [Route("login")]
@@ -79,7 +79,7 @@ namespace MultiShop.Controllers
         [HttpPost]
         public async Task<IActionResult> LogOut()
         {
-             await _userAccount.LogOut();
+            await _userAccount.LogOut();
             return Ok();
         }
         //public async Task<ActionResult<RegisterNewUser>> CreateNewUser(RegisterNewUser newUser)
