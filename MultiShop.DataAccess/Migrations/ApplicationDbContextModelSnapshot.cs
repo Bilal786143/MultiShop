@@ -150,7 +150,7 @@ namespace MultiShop.DataAccess.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("MultiShop.Models.ViewModels.Admin", b =>
+            modelBuilder.Entity("MultiShop.Models.Models.Admin", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -185,7 +185,7 @@ namespace MultiShop.DataAccess.Migrations
                     b.ToTable("Admin");
                 });
 
-            modelBuilder.Entity("MultiShop.Models.ViewModels.Category", b =>
+            modelBuilder.Entity("MultiShop.Models.Models.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -202,7 +202,7 @@ namespace MultiShop.DataAccess.Migrations
                     b.ToTable("Category");
                 });
 
-            modelBuilder.Entity("MultiShop.Models.ViewModels.Order", b =>
+            modelBuilder.Entity("MultiShop.Models.Models.Order", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -252,7 +252,7 @@ namespace MultiShop.DataAccess.Migrations
                     b.ToTable("Order");
                 });
 
-            modelBuilder.Entity("MultiShop.Models.ViewModels.Product", b =>
+            modelBuilder.Entity("MultiShop.Models.Models.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -275,6 +275,10 @@ namespace MultiShop.DataAccess.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<string>("ProductImage")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<decimal>("SalePrice")
                         .HasColumnType("decimal(18,2)");
 
@@ -285,7 +289,7 @@ namespace MultiShop.DataAccess.Migrations
                     b.ToTable("Product");
                 });
 
-            modelBuilder.Entity("MultiShop.Models.ViewModels.RegisterNewUser", b =>
+            modelBuilder.Entity("MultiShop.Models.Models.RegisterNewUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -365,7 +369,7 @@ namespace MultiShop.DataAccess.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("MultiShop.Models.ViewModels.User", b =>
+            modelBuilder.Entity("MultiShop.Models.Models.User", b =>
                 {
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
@@ -404,7 +408,7 @@ namespace MultiShop.DataAccess.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("MultiShop.Models.ViewModels.RegisterNewUser", null)
+                    b.HasOne("MultiShop.Models.Models.RegisterNewUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -413,7 +417,7 @@ namespace MultiShop.DataAccess.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("MultiShop.Models.ViewModels.RegisterNewUser", null)
+                    b.HasOne("MultiShop.Models.Models.RegisterNewUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -428,7 +432,7 @@ namespace MultiShop.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MultiShop.Models.ViewModels.RegisterNewUser", null)
+                    b.HasOne("MultiShop.Models.Models.RegisterNewUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -437,16 +441,16 @@ namespace MultiShop.DataAccess.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("MultiShop.Models.ViewModels.RegisterNewUser", null)
+                    b.HasOne("MultiShop.Models.Models.RegisterNewUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MultiShop.Models.ViewModels.Order", b =>
+            modelBuilder.Entity("MultiShop.Models.Models.Order", b =>
                 {
-                    b.HasOne("MultiShop.Models.ViewModels.Product", "Product")
+                    b.HasOne("MultiShop.Models.Models.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductFId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -455,9 +459,9 @@ namespace MultiShop.DataAccess.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("MultiShop.Models.ViewModels.Product", b =>
+            modelBuilder.Entity("MultiShop.Models.Models.Product", b =>
                 {
-                    b.HasOne("MultiShop.Models.ViewModels.Category", "Category")
+                    b.HasOne("MultiShop.Models.Models.Category", "Category")
                         .WithMany()
                         .HasForeignKey("CatFId")
                         .OnDelete(DeleteBehavior.Cascade)

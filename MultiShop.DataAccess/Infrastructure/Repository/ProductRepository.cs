@@ -3,10 +3,8 @@ using MultiShop.DataAccess.Data;
 using MultiShop.DataAccess.Infrastructure.IRepository;
 using MultiShop.Models.Request;
 using MultiShop.Models.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MultiShop.DataAccess.Infrastructure.Repository
@@ -28,7 +26,7 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
                 Description = request.Description,
                 SalePrice = request.SalePrice,
                 DiscountPrice = request.DiscountPrice,
-                ProductImage=request.ProductImage
+                ProductImage = request.ProductImage
             };
             await _dbcontext.Product.AddAsync(product);
             await _dbcontext.SaveChangesAsync();
@@ -37,11 +35,6 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
 
         public async Task<bool> DeleteProducts(int id)
         {
-            //bool isExist = IsProductExist(id);
-            //if (!isExist)
-            //{
-            //    return false;
-            //}
             var result = await _dbcontext.Product.FirstOrDefaultAsync(x => x.Id == id);
             _dbcontext.Product.Remove(result);
             await _dbcontext.SaveChangesAsync();
@@ -58,7 +51,7 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
                 Description = request.Description,
                 SalePrice = request.SalePrice,
                 DiscountPrice = request.DiscountPrice,
-                ProductImage=request.ProductImage
+                ProductImage = request.ProductImage
             };
             _dbcontext.Product.Update(product);
             await _dbcontext.SaveChangesAsync();

@@ -1,10 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using MultiShop.DataAccess.Infrastructure.IRepository;
 using MultiShop.Models.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MultiShop.DataAccess.Infrastructure.Repository
@@ -20,9 +16,6 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
             _signInManager = signInManager;
         }
 
-
-
-
         public async Task<IdentityResult> CreateUserAsync(User user)
         {
             var NewUser = new RegisterNewUser()
@@ -34,26 +27,15 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
                 UserName = user.Email,
                 Email = user.Email,
                 ConfirmPasswrd = user.ConfirmPasswrd
-
-                //Name = .Name,
-                //Address = newUser.Address,
-                //PhoneNumber=newUser.PhoneNumber,
-                //Email = newUser.Email,
-                //UserName = newUser.Email
             };
 
             var result = await _userManager.CreateAsync(NewUser, user.Password);
-
             if (result.Succeeded)
             {
                 await _signInManager.SignInAsync(NewUser, true);
                 return result;
             }
             return null;
-
-
-
-
         }
 
         public async Task<SignInResult> Login(Login login)
