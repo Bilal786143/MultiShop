@@ -10,6 +10,8 @@ namespace MultiShop.DataAccess.Infrastructure.IRepository
 {
     public interface IUserAccountRepository
     {
-        Task<IdentityResult> CreateUserAsync(RegisterNewUser newUser);
+        Task<IdentityResult> CreateUserAsync(User user);
+        Task<SignInResult> Login(Login login);
+        Task LogOut();
     }
 }

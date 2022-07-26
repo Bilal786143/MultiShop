@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,11 +8,10 @@ using System.Threading.Tasks;
 
 namespace MultiShop.Models.Models
 {
+    [Keyless]
     public class User
     {
 
-        [Key]
-        public int Id { get; set; }
 
         [Required(ErrorMessage = "Full Name Is Required"), Display(Name = "Full Name")]
 
@@ -37,7 +37,7 @@ namespace MultiShop.Models.Models
         public string ConfirmPasswrd { get; set; }
 
         [Display(Name ="Address")]
-        public string? Address { get; set; }
+        public string Address { get; set; }
 
         [Required(ErrorMessage = "Phone Number Is Required"), Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }

@@ -10,8 +10,8 @@ using MultiShop.DataAccess.Data;
 namespace MultiShop.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220725074552_IdentityNewUserByUsama")]
-    partial class IdentityNewUserByUsama
+    [Migration("20220719093732_AddingTablesToDb")]
+    partial class AddingTablesToDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

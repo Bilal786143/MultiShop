@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,18 +8,11 @@ using System.Threading.Tasks;
 
 namespace MultiShop.Models.Models
 {
-    public class RegisterNewUser
+    public class RegisterNewUser :IdentityUser
     {
         [Required(ErrorMessage = "Full Name Is Required"), Display(Name = "Full Name")]
 
         public string Name { get; set; }
-
-
-        [Required(ErrorMessage = "Email Address Is Required"), Display(Name = "Email Address")]
-        [EmailAddress]
-        [RegularExpression("^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$", ErrorMessage = "Must be a valid email")]
-        public string Email { get; set; }
-
 
         [Required(ErrorMessage = "Password Is Required"), Display(Name = "Password")]
         [MinLength(8, ErrorMessage = "Password is Not Shorter Than 8 Characters")]
@@ -33,9 +27,8 @@ namespace MultiShop.Models.Models
         public string ConfirmPasswrd { get; set; }
 
         [Display(Name = "Address")]
-        public string? Address { get; set; }
+        public string  Address { get; set; }
 
-        [Required(ErrorMessage = "Phone Number Is Required"), Display(Name = "Phone Number")]
-        public string PhoneNumber { get; set; }
+    
     }
 }

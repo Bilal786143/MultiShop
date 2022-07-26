@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using MultiShop.DataAccess.Data;
 using MultiShop.DataAccess.Infrastructure.IRepository;
 using MultiShop.DataAccess.Infrastructure.Repository;
+using MultiShop.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,7 +38,7 @@ namespace MultiShop
             services.AddScoped<IOrderRepository, OrderRepository>();
 
             //identity User
-            services.AddIdentity<IdentityUser, IdentityRole>().
+            services.AddIdentity<RegisterNewUser, IdentityRole>().
                 AddEntityFrameworkStores<ApplicationDbContext>();
 
 
@@ -79,6 +80,8 @@ namespace MultiShop
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {
