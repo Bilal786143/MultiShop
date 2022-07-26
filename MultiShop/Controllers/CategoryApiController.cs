@@ -1,11 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MultiShop.DataAccess.Infrastructure.IRepository;
-using MultiShop.DataAccess.Infrastructure.Repository;
 using MultiShop.Models.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace MultiShop.Controllers

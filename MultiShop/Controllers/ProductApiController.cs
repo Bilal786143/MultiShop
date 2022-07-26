@@ -4,8 +4,6 @@ using MultiShop.DataAccess.Infrastructure.IRepository;
 using MultiShop.Models.Request;
 using MultiShop.Models.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace MultiShop.Controllers

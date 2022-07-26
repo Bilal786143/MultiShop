@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using MultiShop.DataAccess.Infrastructure.IRepository;
 using MultiShop.Models.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace MultiShop.Controllers
@@ -17,12 +15,10 @@ namespace MultiShop.Controllers
         public UserAccountApiControlller(IUserAccountRepository userAccount)
         {
             _userAccount = userAccount;
-
         }
         [HttpPost]
         public async Task<ActionResult> Register(User user)
         {
-
             try
             {
                 if (ModelState.IsValid)
@@ -33,7 +29,6 @@ namespace MultiShop.Controllers
                         return Ok(result);
                     }
                 }
-
                 else
                 {
                     ModelState.AddModelError("", "Invalid Credentials");
@@ -42,11 +37,8 @@ namespace MultiShop.Controllers
             catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error While Creating New User");
-
             }
             return null;
-
-
         }
         [Route("login")]
         [HttpPost]
@@ -71,7 +63,6 @@ namespace MultiShop.Controllers
             catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error While Creating New User");
-
             }
             return null;
         }
