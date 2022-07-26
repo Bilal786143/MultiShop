@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MultiShop.DataAccess.Infrastructure.IRepository;
-using MultiShop.Models.ViewModels;
+using MultiShop.Models.Request;
+using MultiShop.Models.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,6 @@ using System.Threading.Tasks;
 namespace MultiShop.Controllers
 {
     [Route("api/[controller]/[action]")]
-
     [ApiController]
     public class ProductApiController : ControllerBase
     {
@@ -20,6 +20,7 @@ namespace MultiShop.Controllers
         {
             _products = products;
         }
+
         [HttpGet]
         public async Task<IActionResult> GetProductsList()
         {
@@ -29,91 +30,74 @@ namespace MultiShop.Controllers
             }
             catch (Exception)
             {
-
                 return StatusCode(StatusCodes.Status404NotFound, "Content Not Found ");
             }
-
         }
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetProductsById(int id)
         {
             try
             {
-                if (id == 0)
+                bool isExist = _products.IsProductExist(id);
+                if (!isExist)
                 {
                     return BadRequest();
                 }
-                else return Ok(await _products.GetProductById(id));
-
+                return Ok(await _products.GetProductById(id));
             }
             catch (Exception)
             {
-
                 return StatusCode(StatusCodes.Status500InternalServerError, "Server is not responding ");
             }
         }
         [HttpPost]
-        public async Task<ActionResult<Product>> CreateProducts(Product product)
+        public async Task<ActionResult<Product>> CreateProducts(ProductCreateRequest product)
         {
             try
             {
-                if (product == null)
+                if (ModelState.IsValid)
                 {
-                    return NotFound();
+                    return Ok(await _products.CreateProduct(product));
                 }
-
-                return Ok(await _products.CreateProduct(product));
+                return NotFound();
             }
             catch (Exception)
             {
-
                 return StatusCode(StatusCodes.Status500InternalServerError, "Server is Not Rresponding");
             }
-
         }
         [HttpPut]
-        public async Task<IActionResult> EditProducts(Product product)
+        public async Task<IActionResult> EditProducts(ProductEditRequest product)
         {
             try
             {
-                if (product == null)
-                {
-                    return NotFound();
-
-                }
-                else
+                if (ModelState.IsValid)
                 {
                     return Ok(await _products.EditProduct(product));
                 }
+                return NotFound();
             }
             catch (Exception)
             {
-
                 return StatusCode(StatusCodes.Status500InternalServerError, "Server is not responding !!!");
             }
-
-
         }
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteProducts(int id)
         {
             try
             {
-
-                var result = await _products.GetProductById(id);
-                if (result != null)
+                bool isExist = _products.IsProductExist(id);
+                if (!isExist)
                 {
-
-                    return Ok(await _products.DeleteProducts(id));
+                    return NotFound();
                 }
-                return NotFound();
-
-
+                await _products.DeleteProducts(id);
+                return Ok($"Product With ID : {id} is Delete Successfully");
             }
             catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Server is not responding !!!");
-
             }
         }
     }

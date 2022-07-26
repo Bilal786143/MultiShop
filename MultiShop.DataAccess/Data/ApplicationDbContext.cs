@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using MultiShop.Models.ViewModels;
+using MultiShop.Models.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,11 +17,10 @@ namespace MultiShop.DataAccess.Data
         }
 
         public DbSet<Category> Category { get; set; }
-
         public DbSet<Admin> Admin { get; set; }
         public DbSet<Product> Product { get; set; }
         public DbSet<User> User { get; set; }
         public DbSet<Order> Order { get; set; }
-
+    
     }
 }

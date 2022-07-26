@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MultiShop.DataAccess.Data;
 using MultiShop.DataAccess.Infrastructure.IRepository;
-using MultiShop.Models.ViewModels;
+using MultiShop.Models.Request;
+using MultiShop.Models.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,33 +19,45 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
         {
             _dbcontext = dbcontext;
         }
-        public async Task<Product> CreateProduct(Product product)
+        public async Task<Product> CreateProduct(ProductCreateRequest request)
         {
+            var product = new Product
+            {
+                Name = request.Name,
+                CatFId = request.CatFId,
+                Description = request.Description,
+                SalePrice = request.SalePrice,
+                DiscountPrice = request.DiscountPrice,
+            };
             await _dbcontext.Product.AddAsync(product);
             await _dbcontext.SaveChangesAsync();
             return product;
         }
 
-
         public async Task<bool> DeleteProducts(int id)
         {
-            bool isExist = IsProductExist(id);
-            if (!isExist)
-            {
-
-                return false;
-
-
-            }
-
+            //bool isExist = IsProductExist(id);
+            //if (!isExist)
+            //{
+            //    return false;
+            //}
             var result = await _dbcontext.Product.FirstOrDefaultAsync(x => x.Id == id);
             _dbcontext.Product.Remove(result);
             await _dbcontext.SaveChangesAsync();
             return true;
         }
 
-        public async Task<Product> EditProduct(Product product)
+        public async Task<Product> EditProduct(ProductEditRequest request)
         {
+            var product = new Product
+            {
+                Id = request.Id,
+                Name = request.Name,
+                CatFId = request.CatFId,
+                Description = request.Description,
+                SalePrice = request.SalePrice,
+                DiscountPrice = request.DiscountPrice,
+            };
             _dbcontext.Product.Update(product);
             await _dbcontext.SaveChangesAsync();
             return product;
@@ -58,7 +71,6 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
                 return result;
             }
             return null;
-
         }
         public bool IsProductExist(int id)
         {
@@ -67,10 +79,7 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
 
         public async Task<IEnumerable<Product>> GetProducts()
         {
-            var result = await _dbcontext.Product.ToListAsync();
-            return result;
+            return await _dbcontext.Product.ToListAsync();
         }
-
-
     }
 }

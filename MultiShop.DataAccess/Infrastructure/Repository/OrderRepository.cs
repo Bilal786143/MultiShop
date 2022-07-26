@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MultiShop.DataAccess.Data;
 using MultiShop.DataAccess.Infrastructure.IRepository;
-using MultiShop.Models.ViewModels;
+using MultiShop.Models.Request;
+using MultiShop.Models.Response;
+using MultiShop.Models.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,11 +26,28 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
             return await _context.Order.ToListAsync();
         }
 
-        public async Task<Order> CreateOrder(Order order)
+        public async Task<CreateOrderResponse> CreateOrder(OrderCreateRequest request)
         {
+            var order = new Order
+            {
+                Email = request.Email,
+                CustomerName = request.CustomerName,
+                PhoneNumber = request.PhoneNumber,
+                Address = request.Address,
+                PaymentMethod = request.PaymentMethod,
+                OrderDate = request.OrderDate,
+                ProductQuantity = request.ProductQuantity,
+                ProductPrice = request.ProductPrice,
+                OrderType = request.OrderType,
+                UserFid = request.UserFid,
+                ProductFId = request.ProductFId,
+            };
             var result = await _context.Order.AddAsync(order);
             await _context.SaveChangesAsync();
-            return result.Entity;
+            return new CreateOrderResponse
+            {
+                Order = result.Entity
+            };
         }
 
         public async Task<Order> GetOrderById(int id)
@@ -41,39 +60,38 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
             return null;
         }
 
-        public async Task<Order> EditOrder(Order order)
+        public async Task<EditOrderResponse> EditOrder(OrderEditRequest request)
         {
-            bool isExist = IsOrderExist(order.Id);
-            if (isExist)
+            var order = new Order
             {
-                var result = await _context.Order.FirstOrDefaultAsync(x => x.Id == order.Id);
-                result.Id = order.Id;
-                result.Email = order.Email;
-                result.Address = order.Address;
-                result.CustomerName = order.CustomerName;
-                result.OrderDate = order.OrderDate;
-                result.OrderType = order.OrderType;
-                result.PaymentMethod = order.PaymentMethod;
-                result.PhoneNumber = order.PhoneNumber;
-                result.ProductFId = order.ProductFId;
-                result.ProductPrice = order.ProductPrice;
-                result.ProductQuantity = order.ProductQuantity;
-
-
-                await _context.SaveChangesAsync();
-                return result;
-            }
-
-            return null;
+                Id = request.Id,
+                Email = request.Email,
+                CustomerName = request.CustomerName,
+                PhoneNumber = request.PhoneNumber,
+                Address = request.Address,
+                PaymentMethod = request.PaymentMethod,
+                OrderDate = request.OrderDate,
+                ProductQuantity = request.ProductQuantity,
+                ProductPrice = request.ProductPrice,
+                OrderType = request.OrderType,
+                UserFid = request.UserFid,
+                ProductFId = request.ProductFId,
+            };
+            _context.Order.Update(order);
+            await _context.SaveChangesAsync();
+            return new EditOrderResponse
+            {
+                Order = order
+            };
         }
 
         public async Task<bool> DeleteOrder(int id)
         {
-            bool isExist = IsOrderExist(id);
-            if (!isExist)
-            {
-                return false;
-            }
+            //bool isExist = IsOrderExist(id);
+            //if (!isExist)
+            //{
+            //    return false;
+            //}
             var result = await _context.Order.FirstOrDefaultAsync(x => x.Id == id);
             _context.Order.Remove(result);
             await _context.SaveChangesAsync();

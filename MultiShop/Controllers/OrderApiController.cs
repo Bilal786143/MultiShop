@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MultiShop.DataAccess.Infrastructure.IRepository;
-using MultiShop.Models.ViewModels;
+using MultiShop.Models.Request;
+using MultiShop.Models.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,30 +43,25 @@ namespace MultiShop.Controllers
                 {
                     return NotFound();
                 }
-
                 return Ok(await _orderRepository.GetOrderById(id));
             }
             catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Internal Server Error");
             }
-
-
         }
 
         [HttpPost]
-        public async Task<ActionResult<Order>> CreateOrder(Order order)
+        public async Task<ActionResult<Order>> CreateOrder(OrderCreateRequest order)
         {
             try
             {
-                if (order == null)
+                if (ModelState.IsValid)
                 {
-                    return BadRequest();
+                    var createOrder = await _orderRepository.CreateOrder(order);
+                    return Ok(createOrder);
                 }
-
-                var createOrder = await _orderRepository.CreateOrder(order);
-                return CreatedAtAction(nameof(GetOrderById), new { id = createOrder.Id }, createOrder);
-
+                return BadRequest();
             }
             catch (Exception)
             {
@@ -73,22 +69,17 @@ namespace MultiShop.Controllers
             }
         }
 
-
         [HttpPost]
-        public async Task<ActionResult<Order>> EditOrder(Order order)
+        public async Task<ActionResult> EditOrder(OrderEditRequest order)
         {
             try
             {
-                //if (id != category.Id)
-                //{
-                //    return BadRequest("Requewsting Category With id is Not Found So It's Can't be Updated");
-                //}
                 bool result = _orderRepository.IsOrderExist(order.Id);
                 if (!result)
                 {
                     return NotFound($"Order With Requesting Details Like ID : {order.Id} not found");
                 }
-                return await _orderRepository.EditOrder(order);
+                return Ok(await _orderRepository.EditOrder(order));
             }
             catch (Exception)
             {
@@ -96,33 +87,28 @@ namespace MultiShop.Controllers
             }
         }
 
-
         [HttpDelete("{id:int}")]
-
         public async Task<ActionResult> DeleteOrderById(int id)
         {
             try
             {
-                bool result = _orderRepository.IsOrderExist(id);
-                if (!result)
+                if (ModelState.IsValid)
                 {
-                    return NotFound($"Order With Requesting Details (Order Id: {id}) to Delete Is not found");
+                    bool result = _orderRepository.IsOrderExist(id);
+                    if (!result)
+                    {
+                        return NotFound($"Order With Requesting Details (Order Id: {id}) to Delete Is not found");
+                    }
+                    await _orderRepository.DeleteOrder(id);
+                    return Ok($"Order With ID : {id} is Delete Successfully");
                 }
-                await _orderRepository.DeleteOrder(id);
-                return Ok($"Order With ID : {id} is Delete Successfully");
+                return NotFound($"Please Double Check the Requesting ID {id} to be delete.\nModel State is InValid");
             }
             catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error Deleting Order");
             }
         }
-
-
-
-
-
-
-
 
     }
 }

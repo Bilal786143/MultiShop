@@ -34,6 +34,7 @@ namespace MultiShop
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IAdminRepository, AdminRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
 
             //identity User
             services.AddIdentity<IdentityUser, IdentityRole>().

@@ -1,4 +1,5 @@
-﻿using MultiShop.Models.ViewModels;
+﻿using MultiShop.Models.Request;
+using MultiShop.Models.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +12,8 @@ namespace MultiShop.DataAccess.Infrastructure.IRepository
     {
         Task<IEnumerable<Product>> GetProducts();
         Task<Product> GetProductById(int id);
-        Task<Product> CreateProduct(Product product);
-        Task<Product> EditProduct(Product product);
+        Task<Product> CreateProduct(ProductCreateRequest product);
+        Task<Product> EditProduct(ProductEditRequest product);
         Task<bool> DeleteProducts(int id);
         bool IsProductExist(int id);
     }

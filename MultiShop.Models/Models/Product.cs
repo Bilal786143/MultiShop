@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MultiShop.Models.ViewModels
+namespace MultiShop.Models.Models
 {
     public class Product
     {
@@ -29,7 +29,7 @@ namespace MultiShop.Models.ViewModels
         public decimal? DiscountPrice { get; set; }
 
         public int CatFId { get; set; }
-        [ForeignKey("Id")]
+        [ForeignKey("CatFId")]
         public virtual Category Category { get; set; }
 
 

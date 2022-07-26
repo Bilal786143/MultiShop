@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using MultiShop.Models.ViewModels;
+using MultiShop.Models.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

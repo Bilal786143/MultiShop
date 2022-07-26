@@ -1,4 +1,6 @@
-﻿using MultiShop.Models.ViewModels;
+﻿using MultiShop.Models.Request;
+using MultiShop.Models.Response;
+using MultiShop.Models.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +13,9 @@ namespace MultiShop.DataAccess.Infrastructure.IRepository
     {
         Task<IEnumerable<Order>> GetAllOrders();
         Task<Order> GetOrderById(int id);
-        Task<Order> CreateOrder(Order order);
-        Task<Order> EditOrder(Order order);
+        Task<CreateOrderResponse> CreateOrder(OrderCreateRequest order);
+        Task<EditOrderResponse> EditOrder(OrderEditRequest request);
         Task<bool> DeleteOrder(int id);
         bool IsOrderExist(int id);
-
     }
 }

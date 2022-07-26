@@ -5,16 +5,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MultiShop.Models.ViewModels
+namespace MultiShop.Models.Models
 {
-    public class RegisterNewUser
+    public class Admin
     {
-        [Required(ErrorMessage = "Full Name Is Required"), Display(Name = "Full Name")]
+        [Key]
+        public int Id { get; set; }
 
-        public string Name { get; set; }
+        [Required(ErrorMessage = "Admin Name Is Required"), Display(Name = "Admin Name")]
+        
+        public string  Name { get; set; }
 
 
-        [Required(ErrorMessage = "Email Address Is Required"), Display(Name = "Email Address")]
+        [Required(ErrorMessage = "Email Is Required"), Display(Name = "Email")]
         [EmailAddress]
         [RegularExpression("^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$", ErrorMessage = "Must be a valid email")]
         public string Email { get; set; }
@@ -32,10 +35,13 @@ namespace MultiShop.Models.ViewModels
         [Compare("Password")]
         public string ConfirmPasswrd { get; set; }
 
-        [Display(Name = "Address")]
+        [Display(Name ="Address")]
         public string? Address { get; set; }
 
         [Required(ErrorMessage = "Phone Number Is Required"), Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }
+
+
+
     }
 }

@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MultiShop.DataAccess.Infrastructure.IRepository;
 using MultiShop.DataAccess.Infrastructure.Repository;
-using MultiShop.Models.ViewModels;
+using MultiShop.Models.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,7 +40,7 @@ namespace MultiShop.Controllers
             try
             {
                 bool isExist = _categoryRepository.IsCategoryExist(id);
-                if (isExist == false)
+                if (!isExist)
                 {
                     return NotFound();
                 }
@@ -49,10 +49,8 @@ namespace MultiShop.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError,"Internal Server Error");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Internal Server Error");
             }
-
-
         }
 
         [HttpPost]
@@ -60,14 +58,12 @@ namespace MultiShop.Controllers
         {
             try
             {
-                if(category==null)
+                if (ModelState.IsValid)
                 {
-                    return BadRequest();
+                    var createCategory = await _categoryRepository.CreateCategory(category);
+                    return CreatedAtAction(nameof(GetCategoryById), new { id = createCategory.Id }, createCategory);
                 }
-
-                var createCategory = await _categoryRepository.CreateCategory(category);
-                return CreatedAtAction(nameof(GetCategoryById), new { id = createCategory.Id }, createCategory);
-
+                return BadRequest();
             }
             catch (Exception)
             {
@@ -81,19 +77,12 @@ namespace MultiShop.Controllers
         {
             try
             {
-                //if (id != category.Id)
-                //{
-                //    return BadRequest("Requewsting Category With id is Not Found So It's Can't be Updated");
-                //}
-                bool result =  _categoryRepository.IsCategoryExist(category.Id);
-                if(!result)
+                bool result = _categoryRepository.IsCategoryExist(category.Id);
+                if (!result)
                 {
                     return NotFound($"Category With Requesting Details Like ID : {category.Id} not found");
                 }
-
                 return await _categoryRepository.UpdateCategory(category);
-
-
             }
             catch (Exception)
             {
@@ -103,13 +92,12 @@ namespace MultiShop.Controllers
 
 
         [HttpDelete("{id:int}")]
-
         public async Task<ActionResult> DeleteCategoryById(int id)
         {
             try
             {
-                bool result = _categoryRepository.IsCategoryExist(id);
-                if (!result)
+                bool isExist = _categoryRepository.IsCategoryExist(id);
+                if (!isExist)
                 {
                     return NotFound($"Category With Requesting Details (Category Id: {id}) to Delete Is not found");
                 }
@@ -121,9 +109,6 @@ namespace MultiShop.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error Deleting Category");
             }
         }
-
-
-
 
     }
 }

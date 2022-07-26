@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MultiShop.DataAccess.Data;
 using MultiShop.DataAccess.Infrastructure.IRepository;
-using MultiShop.Models.ViewModels;
+using MultiShop.Models.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,42 +20,44 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
         }
         public async Task<Admin> CreateAdmin(Admin admin)
         {
-            var result = await  _context.Admin.AddAsync(admin);
+            var result = await _context.Admin.AddAsync(admin);
             await _context.SaveChangesAsync();
             return result.Entity;
         }
 
-        public async Task DeleteAdmin(int id)
+        public async Task<bool> DeleteAdmin(int id)
         {
-            var result =   await _context.Admin.FindAsync(id);
+            var result = await _context.Admin.FindAsync(id);
             if (result != null)
             {
                 _context.Admin.Remove(result);
                 await _context.SaveChangesAsync();
-                
-
+                return true;
             }
-            
+            return false;
         }
 
         public async Task<Admin> EditAdmin(Admin admin)
         {
-          _context.Admin.Update(admin);
-          await _context.SaveChangesAsync();
+            _context.Admin.Update(admin);
+            await _context.SaveChangesAsync();
             return admin;
         }
 
         public async Task<Admin> GetAdminById(int id)
         {
-            var result =  await _context.Admin.FindAsync(id);
+            var result = await _context.Admin.FirstOrDefaultAsync(x => x.Id == id);
             return result;
         }
 
-        public  async Task<IEnumerable<Admin>> GetAllAdmin()
+        public async Task<IEnumerable<Admin>> GetAllAdmin()
         {
-
-            var result =  await _context.Admin.ToListAsync();
+            var result = await _context.Admin.ToListAsync();
             return result;
+        }
+        public bool IsAdminExist(int id)
+        {
+            return _context.Admin.Any(x => x.Id == id);
         }
     }
 }

@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace MultiShop.Models.Request
 {
-    public class ProductCreateRequest
+    public class ProductEditRequest
     {
+        [Key]
+        public int Id { get; set; }
         [Required(ErrorMessage = "Product Name Is Required"), Display(Name = "Product Name")]
         [MaxLength(100, ErrorMessage = "Product Name is not Greater than 100")]
         public string Name { get; set; }
@@ -25,7 +26,8 @@ namespace MultiShop.Models.Request
 
         [Display(Name = "Product Discount Price (Optional)")]
         public decimal? DiscountPrice { get; set; }
-        
+
         public int CatFId { get; set; }
-    } 
+
+    }
 }
