@@ -24,8 +24,7 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
 
 
         public async Task<IdentityResult> CreateUserAsync(User user)
-        public async Task<IdentityResult> CreateUserAsync(RegisterNewUser newUser)
-        {
+        { 
             var NewUser = new RegisterNewUser()
             {
                 Name = user.Name,
@@ -41,9 +40,9 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
                 //PhoneNumber=newUser.PhoneNumber,
                 //Email = newUser.Email,
                 //UserName = newUser.Email
-                PhoneNumber = newUser.PhoneNumber,
-                Email = newUser.Email,
-                UserName = newUser.Email
+                //PhoneNumber = newUser.PhoneNumber,
+                //Email = newUser.Email,
+                //UserName = newUser.Email
             };
 
             var result = await _userManager.CreateAsync(NewUser, user.Password);
@@ -58,7 +57,7 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
          
 
 
-            return null;
+           
         }
 
         public async Task<SignInResult> Login(Login login)
