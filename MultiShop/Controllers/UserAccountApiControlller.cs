@@ -20,11 +20,67 @@ namespace MultiShop.Controllers
 
         }
         [HttpPost]
-        public async Task<ActionResult> index(RegisterNewUser user)
+        public async Task<ActionResult>Register(User user)
         {
-            var result=await _userAccount.CreateUserAsync(user);
-            return Ok(result);
 
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var result = await _userAccount.CreateUserAsync(user);
+                    if (result.Succeeded)
+                    {
+                        return Ok(result);
+                    }
+                }
+
+                else
+                {
+                    ModelState.AddModelError("", "Invalid Credentials");
+                }
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error While Creating New User");
+
+            }
+            return null;
+           
+
+        }
+        [Route("login")]
+        [HttpPost]
+        public async Task<IActionResult> LogIn(Login login)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var result = await _userAccount.Login(login);
+                    if (result.Succeeded)
+                    {
+                        return Ok(result);
+                    }
+                }
+
+                else
+                {
+                    ModelState.AddModelError("", "Invalid Credentials");
+                }
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error While Creating New User");
+
+            }
+            return null;
+        }
+        [Route("LogOut")]
+        [HttpPost]
+        public async Task<IActionResult> LogOut()
+        {
+             await _userAccount.LogOut();
+            return Ok();
         }
         //public async Task<ActionResult<RegisterNewUser>> CreateNewUser(RegisterNewUser newUser)
         //{
