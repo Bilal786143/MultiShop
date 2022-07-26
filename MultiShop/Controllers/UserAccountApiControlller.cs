@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MultiShop.DataAccess.Infrastructure.IRepository;
-using MultiShop.Models.ViewModels;
+using MultiShop.Models.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

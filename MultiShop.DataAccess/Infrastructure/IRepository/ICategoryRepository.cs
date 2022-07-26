@@ -1,4 +1,4 @@
-﻿using MultiShop.Models.ViewModels;
+﻿using MultiShop.Models.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,9 +14,6 @@ namespace MultiShop.DataAccess.Infrastructure.IRepository
         Task<Category> CreateCategory(Category category);
         Task<bool> DeleteCategoryById(int id);
         Task<Category> UpdateCategory(Category category);
-
         bool IsCategoryExist(int id);
-
-
     }
 }

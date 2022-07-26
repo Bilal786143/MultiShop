@@ -10,8 +10,8 @@ using MultiShop.DataAccess.Data;
 namespace MultiShop.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220725084401_AddingOrderTable")]
-    partial class AddingOrderTable
+    [Migration("20220725131055_ModifyOrderTable")]
+    partial class ModifyOrderTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -272,15 +272,19 @@ namespace MultiShop.DataAccess.Migrations
             modelBuilder.Entity("MultiShop.Models.ViewModels.Order", b =>
                 {
                     b.Property<int>("Id")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Address")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CustomerName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("OrderDate")
@@ -293,6 +297,7 @@ namespace MultiShop.DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ProductFId")
@@ -304,7 +309,12 @@ namespace MultiShop.DataAccess.Migrations
                     b.Property<int>("ProductQuantity")
                         .HasColumnType("int");
 
+                    b.Property<Guid>("UserFid")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("ProductFId");
 
                     b.ToTable("Order");
                 });
@@ -312,7 +322,9 @@ namespace MultiShop.DataAccess.Migrations
             modelBuilder.Entity("MultiShop.Models.ViewModels.Product", b =>
                 {
                     b.Property<int>("Id")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("CatFId")
                         .HasColumnType("int");
@@ -334,6 +346,8 @@ namespace MultiShop.DataAccess.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CatFId");
 
                     b.ToTable("Product");
                 });
@@ -428,7 +442,7 @@ namespace MultiShop.DataAccess.Migrations
                 {
                     b.HasOne("MultiShop.Models.ViewModels.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("Id")
+                        .HasForeignKey("ProductFId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -439,7 +453,7 @@ namespace MultiShop.DataAccess.Migrations
                 {
                     b.HasOne("MultiShop.Models.ViewModels.Category", "Category")
                         .WithMany()
-                        .HasForeignKey("Id")
+                        .HasForeignKey("CatFId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

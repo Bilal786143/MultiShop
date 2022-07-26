@@ -1,4 +1,4 @@
-﻿using MultiShop.Models.ViewModels;
+﻿using MultiShop.Models.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +13,7 @@ namespace MultiShop.DataAccess.Infrastructure.IRepository
         Task<Admin> GetAdminById( int id);
         Task<Admin> CreateAdmin(Admin admin);
         Task<Admin> EditAdmin(Admin admin);
-        Task DeleteAdmin(int id);
-
-        
-
+        Task<bool> DeleteAdmin(int id);
+        bool IsAdminExist(int id);
     }
 }
