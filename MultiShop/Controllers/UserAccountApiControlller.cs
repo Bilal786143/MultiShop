@@ -79,7 +79,7 @@ namespace MultiShop.Controllers
         [HttpPost]
         public async Task<IActionResult> LogOut()
         {
-             await _userAccount.LogOut();
+            await _userAccount.LogOut();
             return Ok();
         }
         //public async Task<ActionResult<RegisterNewUser>> CreateNewUser(RegisterNewUser newUser)
