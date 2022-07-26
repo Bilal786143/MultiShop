@@ -36,7 +36,7 @@ namespace MultiShop.Models.Models
         public string ConfirmPasswrd { get; set; }
 
         [Display(Name ="Address")]
-        public string? Address { get; set; }
+        public string Address { get; set; }
 
         [Required(ErrorMessage = "Phone Number Is Required"), Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }

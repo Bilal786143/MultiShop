@@ -28,11 +28,11 @@ namespace MultiShop.Models.Models
         [Display(Name = "Product Discount Price (Optional)")]
         public decimal? DiscountPrice { get; set; }
 
+        [Required(ErrorMessage = "Product Image Is Required"), Display(Name = "Product Image")]
+        public string ProductImage { get; set; }
+
         public int CatFId { get; set; }
         [ForeignKey("CatFId")]
         public virtual Category Category { get; set; }
-
-
-
     }
 }
