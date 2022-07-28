@@ -1,16 +1,11 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MultiShop.Mvc.DataAccess.Infrastructure.IRepository;
 using MultiShop.Mvc.DataAccess.Infrastructure.Repository;
-using MultiShop.Mvc.Models.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using MultiShop.Mvc.DataAccess.ServiceBus.EmailService;
 
 namespace MultiShop.MVC
 {
@@ -27,11 +22,13 @@ namespace MultiShop.MVC
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddHttpClient<ICategoryConsumeApi, CategoryConsumeApi>();
-            services.AddHttpClient<IProducts, Products>();
+            services.AddHttpClient<IProductsConsumeApi, ProductsConsumeApi>();
             services.AddControllersWithViews();
 
             services.AddScoped<ICategoryConsumeApi, CategoryConsumeApi>();
-            services.AddScoped<IProducts, Products>();
+            services.AddScoped<IProductsConsumeApi, ProductsConsumeApi>();
+            services.AddScoped<IOrderConsumeApi, OrderConsumeApi>();
+            services.AddScoped<IEmailSending, EmailSending>();
 
         }
 

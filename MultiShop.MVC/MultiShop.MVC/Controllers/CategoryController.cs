@@ -18,10 +18,7 @@ namespace MultiShop.MVC.Controllers
         }
         public async Task<ActionResult> Index()
         {
-            
-              List<Category> allCategories=   await _consumeCategory.GetAllCategory();
-            
-            
+            List<Category> allCategories = await _consumeCategory.GetAllCategory();
             return View(allCategories);
         }
 
@@ -60,7 +57,6 @@ namespace MultiShop.MVC.Controllers
                 await _consumeCategory.EditCategory(category);
                 return RedirectToAction("index");
             }
-           
             return View();
         }
 
@@ -77,9 +73,5 @@ namespace MultiShop.MVC.Controllers
             _consumeCategory.DeleteCategory(id);
             return RedirectToAction("index");
         }
-
-
-
-
     }
 }

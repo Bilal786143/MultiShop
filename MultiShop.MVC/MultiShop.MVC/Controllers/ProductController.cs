@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MultiShop.Mvc.DataAccess.Infrastructure.IRepository;
+using MultiShop.Mvc.Models.Request;
 using MultiShop.Mvc.Models.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -10,9 +11,9 @@ namespace MultiShop.MVC.Controllers
 {
     public class ProductController : Controller
     {
-        private readonly IProducts _products;
+        private readonly IProductsConsumeApi _products;
 
-        public ProductController(IProducts products )
+        public ProductController(IProductsConsumeApi products )
         {
             _products = products;
         }
@@ -29,7 +30,7 @@ namespace MultiShop.MVC.Controllers
             return View();
         }
         [HttpPost]
-        public  async Task <IActionResult> Create(Product product)
+        public  async Task <IActionResult> Create(ProductCreateRequest product)
         {
           await _products.CreateProduct(product);
             return RedirectToAction("Index");
@@ -43,7 +44,7 @@ namespace MultiShop.MVC.Controllers
             return View(result);
         }
         [HttpPost]
-        public async Task<IActionResult> Edit(Product product)
+        public async Task<IActionResult> Edit(ProductEditRequest product)
         {
            await _products.EditProduct(product);
             return RedirectToAction("Index");
