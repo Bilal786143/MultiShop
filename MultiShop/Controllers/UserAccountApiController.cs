@@ -9,10 +9,10 @@ namespace MultiShop.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class UserAccountApiControlller : ControllerBase
+    public class UserAccountApiController : ControllerBase
     {
         private readonly IUserAccountRepository _userAccount;
-        public UserAccountApiControlller(IUserAccountRepository userAccount)
+        public UserAccountApiController(IUserAccountRepository userAccount)
         {
             _userAccount = userAccount;
         }
