@@ -17,6 +17,8 @@ namespace MultiShop.DataAccess.Data
         public DbSet<Product> Product { get; set; }
         public DbSet<User> User { get; set; }
         public DbSet<Order> Order { get; set; }
-    
+        public DbSet<CartHeader> CartHeader { get; set; }
+        public DbSet<CartDetails> CartDetails { get; set; }
+
     }
 }
