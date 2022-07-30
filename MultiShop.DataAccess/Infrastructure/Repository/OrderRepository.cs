@@ -33,12 +33,10 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
                 PhoneNumber = request.PhoneNumber,
                 Address = request.Address,
                 PaymentMethod = request.PaymentMethod,
+                GrandTotal=request.GrandTotal,
                 OrderDate = request.OrderDate,
-                ProductQuantity = request.ProductQuantity,
-                ProductPrice = request.ProductPrice,
                 OrderType = request.OrderType,
-                UserFid = request.UserFid,
-                ProductFId = request.ProductFId,
+                UserFid = request.UserFid
             };
             var result = await _context.Order.AddAsync(order);
             await _context.SaveChangesAsync();
@@ -69,11 +67,9 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
                 Address = request.Address,
                 PaymentMethod = request.PaymentMethod,
                 OrderDate = request.OrderDate,
-                ProductQuantity = request.ProductQuantity,
-                ProductPrice = request.ProductPrice,
+                GrandTotal=request.GrandTotal,
                 OrderType = request.OrderType,
                 UserFid = request.UserFid,
-                ProductFId = request.ProductFId,
             };
             _context.Order.Update(order);
             await _context.SaveChangesAsync();
