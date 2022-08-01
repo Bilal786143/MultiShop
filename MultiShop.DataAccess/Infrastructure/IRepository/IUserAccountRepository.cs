@@ -9,5 +9,6 @@ namespace MultiShop.DataAccess.Infrastructure.IRepository
         Task<IdentityResult> CreateUserAsync(User user);
         Task<SignInResult> Login(Login login);
         Task LogOut();
+       
     }
 }

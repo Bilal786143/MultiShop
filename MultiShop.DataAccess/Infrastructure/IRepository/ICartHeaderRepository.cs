@@ -10,11 +10,11 @@ namespace MultiShop.DataAccess.Infrastructure.IRepository
     public interface ICartHeaderRepository
     {
         Task<IEnumerable<CartHeader>> GetAllCart();
-        Task<CartHeader> GetCartByUserId(Guid UserId);
+        Task<CartHeader> GetCartByUserId(int id);
         Task<CartCreateResponse> CreateCart(CartCreateRequest cartHeader);
         Task<CartHeader> EditCart(CartHeader cartHeader);
-        Task<bool> DeleteCart(Guid userId);
-        bool IsCartExist(Guid userId);
+        Task<bool> DeleteCart(int id);
+        bool IsCartExist(int id);
 
     }
 }

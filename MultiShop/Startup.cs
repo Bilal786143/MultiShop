@@ -1,3 +1,4 @@
+using IdentityFramwork.Claims;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -8,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using MultiShop.DataAccess.Data;
 using MultiShop.DataAccess.Infrastructure.IRepository;
 using MultiShop.DataAccess.Infrastructure.Repository;
+using MultiShop.DataAccess.Services;
 using MultiShop.Models.Models;
 
 namespace MultiShop
@@ -33,6 +35,8 @@ namespace MultiShop
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<ICartDetailsRepository, CartDetailsRepository>();
             services.AddScoped<ICartHeaderRepository, CartHeaderRepository>();
+            services.AddScoped<IUserClaimsPrincipalFactory<RegisterNewUser>, ApplicationUserClaimsPrincipleFactory>();
+            services.AddScoped<IUserService, UserService>();
 
 
             //identity User

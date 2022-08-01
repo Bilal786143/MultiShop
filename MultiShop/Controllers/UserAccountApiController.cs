@@ -73,24 +73,6 @@ namespace MultiShop.Controllers
             await _userAccount.LogOut();
             return Ok();
         }
-        //public async Task<ActionResult<RegisterNewUser>> CreateNewUser(RegisterNewUser newUser)
-        //{
-        //    try
-        //    {
-        //        if (newUser == null)
-        //        {
-        //            return BadRequest();
-        //        }
-
-        //        var createNewUser = await _userAccount.CreateUserAsync(newUser);
-        //        return Ok();
-
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return StatusCode(StatusCodes.Status500InternalServerError, "Error While Creating New User");
-        //    }
-
-        //}
+     
     }
 }

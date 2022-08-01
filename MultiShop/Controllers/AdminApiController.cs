@@ -65,7 +65,7 @@ namespace MultiShop.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPut]
         public async Task<IActionResult> EditAdmin(Admins admin)
         {
             try

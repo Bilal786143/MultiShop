@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MultiShop.DataAccess.Data;
 using MultiShop.DataAccess.Infrastructure.IRepository;
+using MultiShop.DataAccess.Services;
 using MultiShop.Models.Models;
 using MultiShop.Models.Request;
 using MultiShop.Models.Response;
@@ -14,15 +15,18 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
     public class CartHeaderRepository : ICartHeaderRepository
     {
         private readonly ApplicationDbContext _context;
-        public CartHeaderRepository(ApplicationDbContext context)
+        private readonly IUserService _service;
+        public CartHeaderRepository(ApplicationDbContext context , IUserService service)
         {
             _context = context;
+            _service = service;
         }
         public async Task<CartCreateResponse> CreateCart(CartCreateRequest cartHeader)
         {
             var cart = new CartHeader
             {
-                UserId = cartHeader.UserId,
+                UserId = _service.GetUserID(),
+                //UserId = cartHeader.UserId,
                 NoOfItems = cartHeader.NoOfItems
             };
             var result = await _context.CartHeader.AddAsync(cart);
@@ -34,9 +38,9 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
             };
         }
 
-        public async Task<bool> DeleteCart(Guid userId)
+        public async Task<bool> DeleteCart(int id)
         {
-            var result = await _context.CartHeader.FirstOrDefaultAsync(x => x.UserId == userId);
+            var result = await _context.CartHeader.FirstOrDefaultAsync(x => x.Id==id);
             _context.CartHeader.Remove(result);
             await _context.SaveChangesAsync();
             return true;
@@ -54,15 +58,15 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
             return await _context.CartHeader.ToListAsync();
         }
 
-        public async Task<CartHeader> GetCartByUserId(Guid userId)
+        public async Task<CartHeader> GetCartByUserId(int id)
         {
-            var result = await _context.CartHeader.FirstOrDefaultAsync(x => x.UserId == userId);
+            var result = await _context.CartHeader.FirstOrDefaultAsync(x => x.Id == id);
             return result;
         }
 
-        public bool IsCartExist(Guid userId)
+        public bool IsCartExist(int id)
         {
-            return _context.CartHeader.Any(x => x.UserId == userId);
+            return _context.CartHeader.Any(x => x.Id ==id);
         }
     }
 }

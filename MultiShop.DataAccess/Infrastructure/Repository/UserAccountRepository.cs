@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using MultiShop.DataAccess.Infrastructure.IRepository;
+using MultiShop.DataAccess.Services;
 using MultiShop.Models.Models;
 using System.Threading.Tasks;
 
@@ -9,11 +10,13 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
     {
         private readonly UserManager<RegisterNewUser> _userManager;
         private readonly SignInManager<RegisterNewUser> _signInManager;
+        private readonly IUserService _service;
         public UserAccountRepository(UserManager<RegisterNewUser> userManager,
-                                     SignInManager<RegisterNewUser> signInManager)
+                                     SignInManager<RegisterNewUser> signInManager, IUserService service)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _service = service;
         }
 
         public async Task<IdentityResult> CreateUserAsync(User user)
@@ -38,6 +41,7 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
             return null;
         }
 
+       
         public async Task<SignInResult> Login(Login login)
         {
             var result = await _signInManager.PasswordSignInAsync(login.Email, login.Password, login.RememberMe, false);
@@ -46,6 +50,7 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
         public async Task LogOut()
         {
             await _signInManager.SignOutAsync();
+
         }
     }
 }

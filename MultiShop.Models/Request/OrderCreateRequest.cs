@@ -31,7 +31,7 @@ namespace MultiShop.Models.Request
 
         public string OrderType { get; set; }
 
-        public Guid UserFid { get; set; }
+        //public Guid UserFid { get; set; }
 
         //public int ProductFId { get; set; }
 

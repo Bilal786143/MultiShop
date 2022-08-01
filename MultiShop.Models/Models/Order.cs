@@ -30,7 +30,7 @@ namespace MultiShop.Models.Models
         //public decimal ProductPrice { get; set; }
         public string OrderType { get; set; }
 
-        public Guid UserFid { get; set; } 
+        public string UserFid { get; set; } 
 
 
         //public int ProductFId { get; set; }

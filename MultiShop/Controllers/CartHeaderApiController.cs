@@ -30,17 +30,17 @@ namespace MultiShop.Controllers
             }
         }
 
-        [HttpGet("{userId:Guid}")]
-        public async Task<ActionResult<CartHeader>> GetCartByUserId(Guid userId)
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<CartHeader>> GetCartById(int id)
         {
             try
             {
-                bool isExist = _cartHeader.IsCartExist(userId);
+                bool isExist = _cartHeader.IsCartExist(id);
                 if (!isExist)
                 {
                     return NotFound();
                 }
-                return Ok(await _cartHeader.GetCartByUserId(userId));
+                return Ok(await _cartHeader.GetCartByUserId(id));
             }
             catch (Exception)
             {
@@ -66,40 +66,40 @@ namespace MultiShop.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPut]
         public async Task<ActionResult> EditCart(CartHeader cartHeader)
         {
             try
             {
-                bool result = _cartHeader.IsCartExist(cartHeader.UserId);
+                bool result = _cartHeader.IsCartExist(cartHeader.Id);
                 if (!result)
                 {
-                    return NotFound($"Cart Details With Requesting Details Like ID : {cartHeader.UserId} not found");
+                    return NotFound($"Cart Header With Requesting Details Like ID : {cartHeader.Id} not found");
                 }
                 return Ok(await _cartHeader.EditCart(cartHeader));
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, $"Error While Updating Cart Header at Current ID{cartHeader.UserId}");
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Error While Updating Cart Header at Current ID{cartHeader.Id}");
             }
         }
 
-        [HttpDelete("{userId:Guid}")]
-        public async Task<ActionResult> DeleteOrderById(Guid userId)
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult> DeleteOrderById(int id)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    bool result = _cartHeader.IsCartExist(userId);
+                    bool result = _cartHeader.IsCartExist(id);
                     if (!result)
                     {
-                        return NotFound($"Cart With Requesting Details (Cart Header User Id: {userId}) to Delete Is not found");
+                        return NotFound($"Cart With Requesting Details (Cart Header User Id: {id}) to Delete Is not found");
                     }
-                    await _cartHeader.DeleteCart(userId);
-                    return Ok($"Cart With User ID : {userId} is Delete Successfully");
+                    await _cartHeader.DeleteCart(id);
+                    return Ok($"Cart With ID : {id} is Delete Successfully");
                 }
-                return NotFound($"Please Double Check the Requesting ID {userId} to be delete.\nModel State is InValid");
+                return NotFound($"Please Double Check the Requesting ID {id} to be delete.\nModel State is InValid");
             }
             catch (Exception)
             {

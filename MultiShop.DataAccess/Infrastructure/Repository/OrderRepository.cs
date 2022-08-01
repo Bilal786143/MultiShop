@@ -7,16 +7,19 @@ using MultiShop.Models.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MultiShop.DataAccess.Services;
 
 namespace MultiShop.DataAccess.Infrastructure.Repository
 {
     public class OrderRepository : IOrderRepository
     {
         private readonly ApplicationDbContext _context;
+        private readonly IUserService _userService;
 
-        public OrderRepository(ApplicationDbContext context)
+        public OrderRepository(ApplicationDbContext context ,IUserService userService)
         {
             _context = context;
+            _userService = userService;
         }
 
         public async Task<IEnumerable<Order>> GetAllOrders()
@@ -36,7 +39,7 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
                 GrandTotal=request.GrandTotal,
                 OrderDate = request.OrderDate,
                 OrderType = request.OrderType,
-                UserFid = request.UserFid
+                UserFid = _userService.GetUserID()
             };
             var result = await _context.Order.AddAsync(order);
             await _context.SaveChangesAsync();
@@ -69,7 +72,7 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
                 OrderDate = request.OrderDate,
                 GrandTotal=request.GrandTotal,
                 OrderType = request.OrderType,
-                UserFid = request.UserFid,
+                UserFid = _userService.GetUserID()
             };
             _context.Order.Update(order);
             await _context.SaveChangesAsync();

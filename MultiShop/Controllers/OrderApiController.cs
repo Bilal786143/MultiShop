@@ -67,7 +67,7 @@ namespace MultiShop.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPut]
         public async Task<ActionResult> EditOrder(OrderEditRequest order)
         {
             try
