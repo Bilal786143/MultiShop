@@ -16,7 +16,7 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
         {
             _context = context;
         }
-        public async Task<Admin> CreateAdmin(Admin admin)
+        public async Task<Admins> CreateAdmin(Admins admin)
         {
             var result = await _context.Admin.AddAsync(admin);
             await _context.SaveChangesAsync();
@@ -35,20 +35,20 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
             return false;
         }
 
-        public async Task<Admin> EditAdmin(Admin admin)
+        public async Task<Admins> EditAdmin(Admins admin)
         {
             _context.Admin.Update(admin);
             await _context.SaveChangesAsync();
             return admin;
         }
 
-        public async Task<Admin> GetAdminById(int id)
+        public async Task<Admins> GetAdminById(int id)
         {
             var result = await _context.Admin.FirstOrDefaultAsync(x => x.Id == id);
             return result;
         }
 
-        public async Task<IEnumerable<Admin>> GetAllAdmin()
+        public async Task<IEnumerable<Admins>> GetAllAdmin()
         {
             var result = await _context.Admin.ToListAsync();
             return result;

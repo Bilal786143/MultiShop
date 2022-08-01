@@ -2,7 +2,7 @@
 
 namespace MultiShop.Models.Models
 {
-    public class Admin
+    public class Admins
     {
         [Key]
         public int Id { get; set; }

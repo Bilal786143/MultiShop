@@ -48,7 +48,7 @@ namespace MultiShop.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateAdmin(Admin admin)
+        public async Task<IActionResult> CreateAdmin(Admins admin)
         {
             try
             {
@@ -66,7 +66,7 @@ namespace MultiShop.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditAdmin(Admin admin)
+        public async Task<IActionResult> EditAdmin(Admins admin)
         {
             try
             {
