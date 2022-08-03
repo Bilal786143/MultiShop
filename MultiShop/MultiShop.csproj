@@ -25,4 +25,8 @@
     <ProjectReference Include="..\MultiShop.Models\MultiShop.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\ProductImage\" />
+  </ItemGroup>
+
 </Project>

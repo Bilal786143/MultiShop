@@ -12,12 +12,14 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
     public class ProductRepository : IProductRepository
     {
         private readonly ApplicationDbContext _dbcontext;
+        
+        
 
         public ProductRepository(ApplicationDbContext dbcontext)
         {
             _dbcontext = dbcontext;
-        }
-        public async Task<Product> CreateProduct(ProductCreateRequest request)
+        }               
+        public async Task<Product> CreateProduct(ProductCreateRequest request,string picPath)
         {
             var product = new Product
             {
@@ -26,7 +28,7 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
                 Description = request.Description,
                 SalePrice = request.SalePrice,
                 DiscountPrice = request.DiscountPrice,
-                ProductImage = request.ProductImage
+                ProductImagePath = picPath
             };
             await _dbcontext.Product.AddAsync(product);
             await _dbcontext.SaveChangesAsync();
@@ -51,7 +53,7 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
                 Description = request.Description,
                 SalePrice = request.SalePrice,
                 DiscountPrice = request.DiscountPrice,
-                ProductImage = request.ProductImage
+                //ProductImage = picPath
             };
             _dbcontext.Product.Update(product);
             await _dbcontext.SaveChangesAsync();

@@ -5,6 +5,8 @@ using MultiShop.Models.Request;
 using MultiShop.Models.Models;
 using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
 
 namespace MultiShop.Controllers
 {
@@ -13,18 +15,26 @@ namespace MultiShop.Controllers
     public class ProductApiController : ControllerBase
     {
         private readonly IProductRepository _products;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public ProductApiController(IProductRepository products)
+        public ProductApiController(IProductRepository products, IWebHostEnvironment webHostEnvironment)
         {
             _products = products;
+            _webHostEnvironment = webHostEnvironment;
         }
+
 
         [HttpGet]
         public async Task<IActionResult> GetProductsList()
         {
             try
             {
-                return Ok(await _products.GetProducts());
+                var product= await _products.GetProducts();
+                foreach (var item in product)
+                {
+                    item.ProductImagePath = _webHostEnvironment.WebRootPath + item.ProductImagePath;
+                }
+                    return Ok(product);
             }
             catch (Exception)
             {
@@ -48,14 +58,68 @@ namespace MultiShop.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Server is not responding ");
             }
         }
+        //[HttpPost]
+        //public async Task<ActionResult<Product>> CreateProducts(ProductCreateRequest product)
+        //{
+        //    try
+        //    {
+        //        if (ModelState.IsValid)
+        //        {
+        //            string folder = "\\ProductImage\\";
+        //            string fileName = Guid.NewGuid() + product.ProductImage.FileName;
+        //            if (product.ProductImage.Length > 0)
+        //            {
+        //                if (!Directory.Exists(_webHostEnvironment.WebRootPath + "\\ProductImage\\"))
+        //                {
+        //                    Directory.CreateDirectory(_webHostEnvironment.WebRootPath + "\\ProductImage\\");
+        //                }
+        //                using (FileStream fileStream = System.IO.File.Create(_webHostEnvironment.WebRootPath + folder + fileName))
+        //                {
+
+        //                    await product.ProductImage.CopyToAsync(fileStream);
+        //                    await fileStream.FlushAsync();
+        //                }
+        //            }
+        //            var picPath = folder + fileName;
+        //            var createProduct = await _products.CreateProduct(product, picPath);
+        //            return Ok(createProduct);
+        //        }
+        //        return NotFound();
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return StatusCode(StatusCodes.Status500InternalServerError, "Server is Not Rresponding");
+        //    }
+        //}
+
+
         [HttpPost]
-        public async Task<ActionResult<Product>> CreateProducts(ProductCreateRequest product)
+
+        public async Task<ActionResult<Product>> CreateProducts([FromForm] ProductCreateRequest product)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    return Ok(await _products.CreateProduct(product));
+                    string folder = "\\ProductImage\\";
+                    string fileName = Guid.NewGuid() + product.ProductImage.FileName;
+                    if (product.ProductImage.Length > 0)
+                    {
+                        if (!Directory.Exists(_webHostEnvironment.WebRootPath + "\\ProductImage\\"))
+                        {
+                            Directory.CreateDirectory(_webHostEnvironment.WebRootPath + "\\ProductImage\\");
+                        }
+                        using (FileStream fileStream = System.IO.File.Create(_webHostEnvironment.WebRootPath + folder + fileName))
+                        {
+
+                            await product.ProductImage.CopyToAsync(fileStream);
+                            await fileStream.FlushAsync();
+                        }
+                    }
+                    var picPath = folder + fileName;
+                    var createProduct = await _products.CreateProduct(product, picPath);
+                    createProduct.ProductImagePath = _webHostEnvironment.WebRootPath + createProduct.ProductImagePath;
+                    return Ok(createProduct);
                 }
                 return NotFound();
             }
@@ -64,6 +128,7 @@ namespace MultiShop.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Server is Not Rresponding");
             }
         }
+
         [HttpPut]
         public async Task<IActionResult> EditProducts(ProductEditRequest product)
         {

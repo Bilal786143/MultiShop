@@ -1,6 +1,7 @@
 using IdentityFramwork.Claims;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -84,6 +85,7 @@ namespace MultiShop
             app.UseAuthorization();
 
             app.UseAuthentication();
+            
 
             app.UseEndpoints(endpoints =>
             {
@@ -91,6 +93,10 @@ namespace MultiShop
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+            //app.Run(async (context) =>
+            //{
+            //    await context.Response.WriteAsync("Could Not Found");
+            //});
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MultiShop.Models.Models
@@ -24,7 +25,8 @@ namespace MultiShop.Models.Models
         public decimal? DiscountPrice { get; set; }
 
         [Required(ErrorMessage = "Product Image Is Required"), Display(Name = "Product Image")]
-        public string ProductImage { get; set; }
+        
+        public string ProductImagePath { get; set; }
 
         public int CatFId { get; set; }
         [ForeignKey("CatFId")]

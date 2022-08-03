@@ -9,7 +9,7 @@ namespace MultiShop.DataAccess.Infrastructure.IRepository
     {
         Task<IEnumerable<Product>> GetProducts();
         Task<Product> GetProductById(int id);
-        Task<Product> CreateProduct(ProductCreateRequest product);
+        Task<Product> CreateProduct(ProductCreateRequest product,string picPath);
         Task<Product> EditProduct(ProductEditRequest product);
         Task<bool> DeleteProducts(int id);
         bool IsProductExist(int id);
