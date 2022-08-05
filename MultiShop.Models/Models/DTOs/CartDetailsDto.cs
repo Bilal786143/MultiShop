@@ -1,18 +1,18 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-namespace MultiShop.Models.Models
+namespace MultiShop.Models.Models.DTOs
 {
-    public class CartDetails
+    public class CartDetailsDto
     {
         [Key]
         public int CartDetailsId { get; set; }
        
         public int CartHeaderFId { get; set; }
         [ForeignKey("CartHeaderFId")]
-        public virtual CartHeader CartHeader { get; set; }
+        public virtual CartHeaderDto CartHeader { get; set; }
         public int ProductFId { get; set; }
         [ForeignKey("ProductFId")]
-        public virtual Product Product { get; set; }
+        public virtual ProductDto Product { get; set; }
        public int Count { get; set; }
 
 

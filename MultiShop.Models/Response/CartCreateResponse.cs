@@ -1,9 +1,9 @@
-﻿using MultiShop.Models.Models;
+﻿//using MultiShop.Models.Models;
 
-namespace MultiShop.Models.Response
-{
-    public class CartCreateResponse
-    {
-        public CartHeader CartHeader { get; set; }
-    }
-}
+//namespace MultiShop.Models.Response
+//{
+//    public class CartCreateResponse
+//    {
+//        public CartHeaderDto CartHeader { get; set; }
+//    }
+//}

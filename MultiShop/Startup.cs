@@ -1,3 +1,4 @@
+using AutoMapper;
 using IdentityFramwork.Claims;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -12,6 +13,7 @@ using MultiShop.DataAccess.Infrastructure.IRepository;
 using MultiShop.DataAccess.Infrastructure.Repository;
 using MultiShop.DataAccess.Services;
 using MultiShop.Models.Models;
+using System;
 
 namespace MultiShop
 {
@@ -30,12 +32,15 @@ namespace MultiShop
             services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            //Registering AutoMapper//
+            IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
+            services.AddSingleton(mapper);
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
             services.AddScoped<ICategoryRepository, CategoryRepository>();
-            services.AddScoped<IAdminRepository, AdminRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
-            services.AddScoped<ICartDetailsRepository, CartDetailsRepository>();
-            services.AddScoped<ICartHeaderRepository, CartHeaderRepository>();
+            services.AddScoped<ICartRepository, CartRepository>();
             services.AddScoped<IUserClaimsPrincipalFactory<RegisterNewUser>, ApplicationUserClaimsPrincipleFactory>();
             services.AddScoped<IUserService, UserService>();
 

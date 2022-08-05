@@ -12,8 +12,6 @@ namespace MultiShop.DataAccess.Data
         }
 
         public DbSet<Category> Category { get; set; }
-
-        public DbSet<Admins> Admin { get; set; }
         public DbSet<Product> Product { get; set; }
         public DbSet<User> User { get; set; }
         public DbSet<Order> Order { get; set; }

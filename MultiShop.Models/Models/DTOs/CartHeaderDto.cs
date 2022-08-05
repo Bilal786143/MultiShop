@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MultiShop.Models.Models
+namespace MultiShop.Models.Models.DTOs
 {
-    public class CartHeader
+    public class CartHeaderDto
     {
-        [Key]
+   
         public int Id{ get; set; }
         public string UserId { get; set; }
 
