@@ -2,7 +2,6 @@ using AutoMapper;
 using IdentityFramwork.Claims;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -56,9 +55,12 @@ namespace MultiShop
 
 
             services.AddSwaggerGen();
-            
 
-            services.AddControllersWithViews();
+
+            services.AddControllersWithViews()
+    .AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -90,7 +92,7 @@ namespace MultiShop
             app.UseAuthorization();
 
             app.UseAuthentication();
-            
+
 
             app.UseEndpoints(endpoints =>
             {

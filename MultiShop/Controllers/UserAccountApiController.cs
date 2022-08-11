@@ -40,7 +40,7 @@ namespace MultiShop.Controllers
             }
             return null;
         }
-        [Route("login")]
+
         [HttpPost]
         public async Task<IActionResult> LogIn(Login login)
         {
@@ -49,10 +49,9 @@ namespace MultiShop.Controllers
                 if (ModelState.IsValid)
                 {
                     var result = await _userAccount.Login(login);
-                    if (result.Succeeded)
-                    {
-                        return Ok(result);
-                    }
+
+                    return Ok(result);
+
                 }
 
                 else
@@ -66,13 +65,18 @@ namespace MultiShop.Controllers
             }
             return null;
         }
-        [Route("LogOut")]
+
         [HttpPost]
         public async Task<IActionResult> LogOut()
         {
             await _userAccount.LogOut();
             return Ok();
         }
-     
+
+        [HttpGet]
+        public async Task<IActionResult> GetUserId(string email)
+        {
+            return Ok(await _userAccount.GetLoginUserId(email));
+        }
     }
 }
