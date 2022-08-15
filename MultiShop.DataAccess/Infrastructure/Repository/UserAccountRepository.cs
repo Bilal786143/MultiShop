@@ -3,10 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using MultiShop.DataAccess.Infrastructure.IRepository;
 using MultiShop.DataAccess.Services;
 using MultiShop.Models.Models;
-using MultiShop.Models.Models.DTOs;
 using MultiShop.Models.Response;
-using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace MultiShop.DataAccess.Infrastructure.Repository
@@ -37,7 +34,6 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
                 Email = user.Email,
                 ConfirmPasswrd = user.ConfirmPasswrd
             };
-
             var result = await _userManager.CreateAsync(NewUser, user.Password);
             if (result.Succeeded)
             {
@@ -66,7 +62,6 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
         public async Task LogOut()
         {
             await _signInManager.SignOutAsync();
-
         }
 
         public async Task<string> GetLoginUserId(string email)
@@ -75,7 +70,6 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
             return user.Id;
             //var id = _signInManager.Context.User.Identity.Name;
             //var test = ClaimsPrincipal.Current.Identities.First().Claims.ToList();
-           
         }
     }
 }

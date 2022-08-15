@@ -5,9 +5,7 @@ using MultiShop.DataAccess.Infrastructure.IRepository;
 using MultiShop.Models.Models;
 using MultiShop.Models.Models.DTOs;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MultiShop.DataAccess.Infrastructure.Repository
@@ -16,7 +14,7 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
     {
         private readonly ApplicationDbContext _context;
         private IMapper _mapper;
-        public CartRepository(ApplicationDbContext context ,IMapper mapper)
+        public CartRepository(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
@@ -24,7 +22,7 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
         public async Task<bool> ClearCart(string userId)
         {
             var cartHeaderfromDb = await _context.CartHeader.FirstOrDefaultAsync(u => u.UserId == userId);
-            if(cartHeaderfromDb != null)
+            if (cartHeaderfromDb != null)
             {
                 _context.CartDetails.RemoveRange(_context.CartDetails.Where(u => u.CartHeaderFId == cartHeaderfromDb.Id));
                 _context.CartHeader.Remove(cartHeaderfromDb);
@@ -35,7 +33,7 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
             return false;
         }
 
-        public  async Task<CartDto> CreateUpdateCart(CartDto cartDto)
+        public async Task<CartDto> CreateUpdateCart(CartDto cartDto)
         {
             Cart cart = _mapper.Map<Cart>(cartDto);
             //check if product exist in db 
@@ -48,20 +46,20 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
             }
             //check if cartHeader is null Create CartHeader and cartdetails 
             //first we find out user id 
-            var carHeaderFromDb =  await _context.CartHeader.AsNoTracking().FirstOrDefaultAsync(u => u.UserId == cart.CartHeader.UserId);
+            var carHeaderFromDb = await _context.CartHeader.AsNoTracking().FirstOrDefaultAsync(u => u.UserId == cart.CartHeader.UserId);
             if (carHeaderFromDb == null)
             {
                 //create cartHeader And CartDetails
                 _context.CartHeader.Add(cart.CartHeader);
                 await _context.SaveChangesAsync();
 
-               //passing CartHeaderId from CartHeader To CartHeaderFid in CartDetails 
-              
+                //passing CartHeaderId from CartHeader To CartHeaderFid in CartDetails 
+
                 cart.CartDetails.FirstOrDefault().CartHeaderFId = cart.CartHeader.Id;
                 cart.CartDetails.FirstOrDefault().Product = null;
-            
+
                 //Add Cart Details 
-               
+
                 _context.CartDetails.Add(cart.CartDetails.FirstOrDefault());
                 await _context.SaveChangesAsync();
             }
@@ -71,9 +69,9 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
             else
             {
                 //To Get CartDetails From Database
-                var cartDetailsFromDb =  await _context.CartDetails.AsNoTracking().FirstOrDefaultAsync(u => u.ProductFId == cart.CartDetails.FirstOrDefault().ProductFId && u.CartHeaderFId == carHeaderFromDb.Id);
+                var cartDetailsFromDb = await _context.CartDetails.AsNoTracking().FirstOrDefaultAsync(u => u.ProductFId == cart.CartDetails.FirstOrDefault().ProductFId && u.CartHeaderFId == carHeaderFromDb.Id);
 
-                if(cartDetailsFromDb == null)
+                if (cartDetailsFromDb == null)
                 {
                     //create product Details 
                     cart.CartDetails.FirstOrDefault().CartHeaderFId = carHeaderFromDb.Id;
@@ -96,17 +94,17 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
 
         }
 
-        public  async Task<CartDto> GetCartByUserId(string userId)
+        public async Task<CartDto> GetCartByUserId(string userId)
         {
             Cart cart = new()
             {
                 CartHeader = await _context.CartHeader.FirstOrDefaultAsync(u => u.UserId == userId)
             };
-            cart.CartDetails = _context.CartDetails.Where(x => x.CartHeaderFId == cart.CartHeader.Id).Include(u=>u.Product);
-            return  _mapper.Map<CartDto>(cart);
+            cart.CartDetails = _context.CartDetails.Where(x => x.CartHeaderFId == cart.CartHeader.Id).Include(u => u.Product);
+            return _mapper.Map<CartDto>(cart);
         }
 
-        public async  Task<bool> RemoveFromCart(int cartDetailsId)
+        public async Task<bool> RemoveFromCart(int cartDetailsId)
         {
             try
             {
@@ -121,13 +119,13 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
                 await _context.SaveChangesAsync();
                 return true;
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return false;
             }
         }
-  
+
     }
 
-    
+
 }
