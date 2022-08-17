@@ -39,6 +39,7 @@ namespace MultiShop
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IOrderDetailsRepository, OrderDetailsRepository>();
             services.AddScoped<ICartRepository, CartRepository>();
             services.AddScoped<IUserClaimsPrincipalFactory<RegisterNewUser>, ApplicationUserClaimsPrincipleFactory>();
             services.AddScoped<IUserService, UserService>();
@@ -52,15 +53,11 @@ namespace MultiShop
             //register IuserAccountRepository and UserAccountRepository
             services.AddScoped<IUserAccountRepository, UserAccountRepository>();
 
-
-
             services.AddSwaggerGen();
-
 
             services.AddControllersWithViews()
     .AddNewtonsoftJson(options =>
-    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-);
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
