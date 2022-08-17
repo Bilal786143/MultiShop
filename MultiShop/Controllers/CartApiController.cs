@@ -25,7 +25,7 @@ namespace MultiShop.Controllers
         {
             try
             {
-                CartDto cart =  await _cart.GetCartByUserId(userId);
+                var cart =  await _cart.GetCartByUserId(userId);
                 _response.Result = cart;
 
             }
