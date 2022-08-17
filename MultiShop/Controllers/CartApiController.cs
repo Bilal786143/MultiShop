@@ -88,8 +88,8 @@ namespace MultiShop.Controllers
             }
             return _response;
         }
-        [HttpPost("ClearCart")]
-        public async Task<Object> ClearCart([FromBody] string userId)
+        [HttpGet("ClearCart/{userId}")]
+        public async Task<Object> ClearCart(string userId)
         {
             try
             {
