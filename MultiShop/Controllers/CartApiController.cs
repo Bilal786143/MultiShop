@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using MultiShop.DataAccess.Infrastructure.IRepository;
 using MultiShop.Models.Models.DTOs;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace MultiShop.Controllers
@@ -71,8 +69,8 @@ namespace MultiShop.Controllers
             }
             return _response;
         }
-        [HttpPost("RemoveCart")]
-        public async Task<Object> RemoveCart( [FromBody]int cartId)
+        [HttpGet("RemoveCart/{cartId}")]
+        public async Task<Object> RemoveCart(int cartId)
         {
             try
             {
