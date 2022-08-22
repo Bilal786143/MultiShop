@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using MultiShop.DataAccess.Infrastructure.IRepository;
 using MultiShop.Models.Models.DTOs;
 using System;
@@ -7,101 +8,77 @@ using System.Threading.Tasks;
 
 namespace MultiShop.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[Action]")]
     [ApiController]
-    public class CartApiController : ControllerBase
+    public class CartApiController : BaseController
     {
+        
         private readonly ICartRepository _cart;
-        protected ResponseDto _response;
+      
         public CartApiController(ICartRepository cart )
         {
             _cart = cart;
-            _response = new ResponseDto();
         }
-        [HttpGet("Getcart/{userId}")]
-        public  async Task <Object> GetCart(string userId)
+        [HttpGet("{userId}")]
+        public  async Task <ActionResult<CartDto>> GetCart(string userId)
         {
             try
-            {
-                var cart =  await _cart.GetCartByUserId(userId);
-                _response.Result = cart;
-
+            { 
+                return Ok( await _cart.GetCartByUserId(userId));
             }
             catch (Exception ex)
             {
-
-                _response.IsSuccess = false;
-                _response.ErrorMessage = new List<string>() { ex.ToString() };
+                return BadRequest(ErrorResponse(ex));
             }
-            return _response;
         }
-        [HttpPost("AddCart")]
-        public async Task<Object> AddCart(CartDto cartDto)
+        [HttpPost]
+        public async Task<ActionResult<CartDto>> AddCart(CartDto cartDto)
         {
             try
             {
-                CartDto cart = await _cart.CreateUpdateCart(cartDto);
-                _response.Result = cart;
-
+                return Ok(await _cart.CreateUpdateCart(cartDto));
             }
             catch (Exception ex)
             {
-
-                _response.IsSuccess = false;
-                _response.ErrorMessage = new List<string>() { ex.ToString() };
+                return BadRequest(ErrorResponse(ex));
             }
-            return _response;
         }
-        [HttpPost("UpdateCart")]
-        public async Task<Object> UpdateCart(CartDto cartDto)
+        [HttpPost]
+        public async Task<ActionResult<CartDto>> UpdateCart(CartDto cartDto)
         {
             try
             {
-                CartDto cart = await _cart.CreateUpdateCart(cartDto);
-                _response.Result = cart;
-
+                return Ok(await _cart.CreateUpdateCart(cartDto));
             }
             catch (Exception ex)
             {
-
-                _response.IsSuccess = false;
-                _response.ErrorMessage = new List<string>() { ex.ToString() };
+                return BadRequest(ErrorResponse(ex));
             }
-            return _response;
         }
-        [HttpGet("RemoveCart/{cartId}")]
-        public async Task<Object> RemoveCart(int cartId)
+        [HttpGet("{cartId}")]
+        public async Task<ActionResult<CartDto>> RemoveCart(int cartId)
         {
             try
             {
-                bool isSuccess = await _cart.RemoveFromCart(cartId);
-                _response.Result = isSuccess;
-
+                return Ok(await _cart.RemoveFromCart(cartId));
             }
             catch (Exception ex)
             {
-
-                _response.IsSuccess = false;
-                _response.ErrorMessage = new List<string>() { ex.ToString() };
-            }
-            return _response;
+                return BadRequest(ErrorResponse(ex));
+            }   
         }
-        [HttpGet("ClearCart/{userId}")]
-        public async Task<Object> ClearCart(string userId)
+        [HttpGet("{userId}")]
+        public async Task<ActionResult<CartDto>> ClearCart(string userId)
         {
-            try
+           try
             {
-                bool isSuccess = await _cart.ClearCart(userId);
-                _response.Result = isSuccess;
-
+                return Ok(await _cart.ClearCart(userId));
             }
             catch (Exception ex)
             {
-
-                _response.IsSuccess = false;
-                _response.ErrorMessage = new List<string>() { ex.ToString() };
+                return BadRequest(ErrorResponse(ex));
             }
-            return _response;
+           
         }
     }
 }

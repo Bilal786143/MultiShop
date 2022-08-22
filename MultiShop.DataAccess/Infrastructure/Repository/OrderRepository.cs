@@ -72,7 +72,7 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
                 OrderDate = request.OrderDate,
                 GrandTotal=request.GrandTotal,
                 OrderType = request.OrderType,
-                UserFid = _userService.GetUserID()
+                UserFid = request.UserFid
             };
             _context.Order.Update(order);
             await _context.SaveChangesAsync();

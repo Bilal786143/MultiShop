@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using MultiShop.DataAccess.Infrastructure.IRepository;
 using MultiShop.Models.Models;
 using System;
@@ -7,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace MultiShop.Controllers
 {
-    [Route("api/[controller]/[action]")]
+    [Route("api/[controller]/[Action]")]
     [ApiController]
-    public class CategoryApiController : ControllerBase
+    public class CategoryApiController : BaseController
     {
         private readonly ICategoryRepository _categoryRepository;
 
@@ -25,9 +24,9 @@ namespace MultiShop.Controllers
             {
                 return Ok(await _categoryRepository.GetAllCategory());
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Internal Server Error\nError While Retreiving Categories From Server");
+                return BadRequest( ErrorResponse(ex));
             }
         }
 
@@ -44,9 +43,9 @@ namespace MultiShop.Controllers
 
                 return Ok(await _categoryRepository.GetCategoryById(id));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Internal Server Error");
+                return BadRequest(ErrorResponse(ex));
             }
         }
 
@@ -62,12 +61,11 @@ namespace MultiShop.Controllers
                 }
                 return BadRequest();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Error While Creating New Category");
+                return BadRequest(ErrorResponse(ex));
             }
         }
-
 
         [HttpPost]
         public async Task<ActionResult<Category>> UpdateCategory(Category category)
@@ -77,16 +75,15 @@ namespace MultiShop.Controllers
                 bool result = _categoryRepository.IsCategoryExist(category.Id);
                 if (!result)
                 {
-                    return NotFound($"Category With Requesting Details Like ID : {category.Id} not found");
+                    return NotFound();
                 }
-                return await _categoryRepository.UpdateCategory(category);
+                return Ok(await _categoryRepository.UpdateCategory(category));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Error While Updating Data at Current ID");
+                return BadRequest(ErrorResponse(ex));
             }
         }
-
 
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> DeleteCategoryById(int id)
@@ -96,14 +93,14 @@ namespace MultiShop.Controllers
                 bool isExist = _categoryRepository.IsCategoryExist(id);
                 if (!isExist)
                 {
-                    return NotFound($"Category With Requesting Details (Category Id: {id}) to Delete Is not found");
+                    return NotFound();
                 }
-                await _categoryRepository.DeleteCategoryById(id);
-                return Ok($"Category With ID : {id} is Delete Successfully");
+               return Ok( await _categoryRepository.DeleteCategoryById(id));
+             
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Error Deleting Category");
+                return BadRequest(ErrorResponse(ex));
             }
         }
 

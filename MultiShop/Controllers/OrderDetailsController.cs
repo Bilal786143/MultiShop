@@ -11,7 +11,7 @@ namespace MultiShop.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class OrderDetailsController : ControllerBase
+    public class OrderDetailsController : BaseController
     {
         private readonly IOrderDetailsRepository _orderDetails;
 
@@ -26,10 +26,9 @@ namespace MultiShop.Controllers
             {
                 return Ok( await _orderDetails.GetAllOrdersDetails());
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                return StatusCode(StatusCodes.Status500InternalServerError, "Internal Server Error\nError While Retreiving Orders From Server");
+               return BadRequest(ErrorResponse(ex));
             }
         }
         [HttpPost]
@@ -43,10 +42,10 @@ namespace MultiShop.Controllers
                 }
                 return BadRequest();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Internal Server Error\nError While Retreiving Orders From Server");
-      
+                return BadRequest(ErrorResponse(ex));
+
             }
         }
         [HttpGet("{id:int}")]
@@ -56,9 +55,9 @@ namespace MultiShop.Controllers
             {
                 return Ok( await _orderDetails.GetOrderDetailsById(id));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Internal Server Error\nError While Retreiving Orders From Server");
+                return BadRequest(ErrorResponse(ex));
             }
         }
     }

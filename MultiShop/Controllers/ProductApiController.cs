@@ -12,7 +12,7 @@ namespace MultiShop.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class ProductApiController : ControllerBase
+    public class ProductApiController :BaseController
     {
         private readonly IProductRepository _products;
         private readonly IWebHostEnvironment _webHostEnvironment;
@@ -22,7 +22,6 @@ namespace MultiShop.Controllers
             _products = products;
             _webHostEnvironment = webHostEnvironment;
         }
-
 
         [HttpGet]
         public async Task<IActionResult> GetProductsList()
@@ -36,9 +35,9 @@ namespace MultiShop.Controllers
                 }
                     return Ok(product);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status404NotFound, "Content Not Found ");
+                return BadRequest(ErrorResponse(ex));
             }
         }
         [HttpGet("{id:int}")]
@@ -53,45 +52,11 @@ namespace MultiShop.Controllers
                 }
                 return Ok(await _products.GetProductById(id));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Server is not responding ");
+                return BadRequest(ErrorResponse(ex));
             }
         }
-        //[HttpPost]
-        //public async Task<ActionResult<Product>> CreateProducts(ProductCreateRequest product)
-        //{
-        //    try
-        //    {
-        //        if (ModelState.IsValid)
-        //        {
-        //            string folder = "\\ProductImage\\";
-        //            string fileName = Guid.NewGuid() + product.ProductImage.FileName;
-        //            if (product.ProductImage.Length > 0)
-        //            {
-        //                if (!Directory.Exists(_webHostEnvironment.WebRootPath + "\\ProductImage\\"))
-        //                {
-        //                    Directory.CreateDirectory(_webHostEnvironment.WebRootPath + "\\ProductImage\\");
-        //                }
-        //                using (FileStream fileStream = System.IO.File.Create(_webHostEnvironment.WebRootPath + folder + fileName))
-        //                {
-
-        //                    await product.ProductImage.CopyToAsync(fileStream);
-        //                    await fileStream.FlushAsync();
-        //                }
-        //            }
-        //            var picPath = folder + fileName;
-        //            var createProduct = await _products.CreateProduct(product, picPath);
-        //            return Ok(createProduct);
-        //        }
-        //        return NotFound();
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return StatusCode(StatusCodes.Status500InternalServerError, "Server is Not Rresponding");
-        //    }
-        //}
-
 
         [HttpPost]
 
@@ -123,9 +88,9 @@ namespace MultiShop.Controllers
                 }
                 return NotFound();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Server is Not Rresponding");
+              return BadRequest(ErrorResponse(ex));
             }
         }
 
@@ -140,9 +105,9 @@ namespace MultiShop.Controllers
                 }
                 return NotFound();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Server is not responding !!!");
+                return BadRequest(ErrorResponse(ex));
             }
         }
         [HttpDelete("{id:int}")]
@@ -155,12 +120,12 @@ namespace MultiShop.Controllers
                 {
                     return NotFound();
                 }
-                await _products.DeleteProducts(id);
-                return Ok($"Product With ID : {id} is Delete Successfully");
+              return Ok(await _products.DeleteProducts(id));
+              
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Server is not responding !!!");
+                return BadRequest(ErrorResponse(ex));
             }
         }
     }

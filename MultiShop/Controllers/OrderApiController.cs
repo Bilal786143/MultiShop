@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using MultiShop.DataAccess.Infrastructure.IRepository;
 using MultiShop.Models.Request;
 using MultiShop.Models.Models;
@@ -10,7 +9,7 @@ namespace MultiShop.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class OrderApiController : ControllerBase
+    public class OrderApiController : BaseController
     {
         private readonly IOrderRepository _orderRepository;
         public OrderApiController(IOrderRepository orderRepository)
@@ -25,9 +24,9 @@ namespace MultiShop.Controllers
             {
                 return Ok(await _orderRepository.GetAllOrders());
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Internal Server Error\nError While Retreiving Orders From Server");
+                return BadRequest(ErrorResponse(ex));
             }
         }
 
@@ -43,9 +42,9 @@ namespace MultiShop.Controllers
                 }
                 return Ok(await _orderRepository.GetOrderById(id));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Internal Server Error");
+                return BadRequest(ErrorResponse(ex));
             }
         }
 
@@ -61,9 +60,9 @@ namespace MultiShop.Controllers
                 }
                 return BadRequest();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Error While Creating New Order");
+                return BadRequest(ErrorResponse(ex));
             }
         }
 
@@ -75,13 +74,13 @@ namespace MultiShop.Controllers
                 bool result = _orderRepository.IsOrderExist(order.Id);
                 if (!result)
                 {
-                    return NotFound($"Order With Requesting Details Like ID : {order.Id} not found");
+                    return NotFound();
                 }
                 return Ok(await _orderRepository.EditOrder(order));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, $"Error While Updating Order at Current ID{order.Id}");
+                return BadRequest(ErrorResponse(ex));
             }
         }
 
@@ -95,16 +94,16 @@ namespace MultiShop.Controllers
                     bool result = _orderRepository.IsOrderExist(id);
                     if (!result)
                     {
-                        return NotFound($"Order With Requesting Details (Order Id: {id}) to Delete Is not found");
+                        return NotFound();
                     }
-                    await _orderRepository.DeleteOrder(id);
-                    return Ok($"Order With ID : {id} is Delete Successfully");
+                  return Ok(  await _orderRepository.DeleteOrder(id));
+                   
                 }
-                return NotFound($"Please Double Check the Requesting ID {id} to be delete.\nModel State is InValid");
+                return NotFound();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Error Deleting Order");
+                return BadRequest(ErrorResponse(ex));
             }
         }
 

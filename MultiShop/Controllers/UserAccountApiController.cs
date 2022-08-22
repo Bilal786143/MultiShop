@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using MultiShop.DataAccess.Infrastructure.IRepository;
 using MultiShop.Models.Models;
 using System;
@@ -9,7 +8,7 @@ namespace MultiShop.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class UserAccountApiController : ControllerBase
+    public class UserAccountApiController : BaseController
     {
         private readonly IUserAccountRepository _userAccount;
         public UserAccountApiController(IUserAccountRepository userAccount)
@@ -34,9 +33,9 @@ namespace MultiShop.Controllers
                     ModelState.AddModelError("", "Invalid Credentials");
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Error While Creating New User");
+                return BadRequest(ErrorResponse(ex));
             }
             return null;
         }
@@ -53,20 +52,19 @@ namespace MultiShop.Controllers
                     return Ok(result);
 
                 }
-
                 else
                 {
                     ModelState.AddModelError("", "Invalid Credentials");
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Error While Creating New User");
+                return BadRequest(ErrorResponse(ex));
             }
             return null;
         }
 
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> LogOut()
         {
             await _userAccount.LogOut();
