@@ -7,26 +7,20 @@ using MultiShop.Models.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using MultiShop.DataAccess.Services;
 
 namespace MultiShop.DataAccess.Infrastructure.Repository
 {
     public class OrderRepository : IOrderRepository
     {
         private readonly ApplicationDbContext _context;
-        private readonly IUserService _userService;
-
-        public OrderRepository(ApplicationDbContext context ,IUserService userService)
+        public OrderRepository(ApplicationDbContext context)
         {
             _context = context;
-            _userService = userService;
         }
-
         public async Task<IEnumerable<Order>> GetAllOrders()
         {
             return await _context.Order.ToListAsync();
         }
-
         public async Task<CreateOrderResponse> CreateOrder(OrderCreateRequest request)
         {
             var order = new Order
@@ -48,7 +42,6 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
                 Order = result.Entity
             };
         }
-
         public async Task<Order> GetOrderById(int id)
         {
             var result = await _context.Order.FirstOrDefaultAsync(x => x.Id == id);
@@ -58,7 +51,6 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
             }
             return null;
         }
-
         public async Task<EditOrderResponse> EditOrder(OrderEditRequest request)
         {
             var order = new Order
@@ -81,20 +73,13 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
                 Order = order
             };
         }
-
         public async Task<bool> DeleteOrder(int id)
         {
-            //bool isExist = IsOrderExist(id);
-            //if (!isExist)
-            //{
-            //    return false;
-            //}
             var result = await _context.Order.FirstOrDefaultAsync(x => x.Id == id);
             _context.Order.Remove(result);
             await _context.SaveChangesAsync();
             return true;
         }
-
         public bool IsOrderExist(int id)
         {
             return _context.Order.Any(x => x.Id == id);

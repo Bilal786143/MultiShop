@@ -4,10 +4,7 @@ using MultiShop.DataAccess.Infrastructure.IRepository;
 using MultiShop.Models.Models;
 using MultiShop.Models.Request;
 using MultiShop.Models.Response;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MultiShop.DataAccess.Infrastructure.Repository
@@ -15,7 +12,6 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
     public class OrderDetailsRepository : IOrderDetailsRepository
     {
         private readonly ApplicationDbContext _context;
-
         public OrderDetailsRepository(ApplicationDbContext context)
         {
             _context = context;
@@ -37,7 +33,6 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
                 OrderDetails = result.Entity
             };
         }
-
         public async Task<IEnumerable<OrderDetails>> GetAllOrdersDetails()
         {
           return await _context.OrderDetails.ToListAsync();

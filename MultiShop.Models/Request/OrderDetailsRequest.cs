@@ -8,7 +8,5 @@
         public double TotalPrice { get; set; }
         public int ProductFId { get; set; }
         public int OrderFId { get; set; }
-       
-
     }
 }

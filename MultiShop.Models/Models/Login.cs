@@ -4,9 +4,8 @@ using System.ComponentModel.DataAnnotations;
 namespace MultiShop.Models.Models
 {
     [Keyless]
-     public class Login
+    public class Login
     {
-
         [Required(ErrorMessage = "Please Enter our Email Address"), EmailAddress]
         [Display(Name = "Email Address:")]
         public string Email { get; set; }

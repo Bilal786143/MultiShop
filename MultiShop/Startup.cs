@@ -39,10 +39,10 @@ namespace MultiShop
                 options.Password.RequiredUniqueChars = 0;
 
             });
-           
+
 
             //Registering AutoMapper//
-          IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
+            IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
             services.AddSingleton(mapper);
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
@@ -107,10 +107,6 @@ namespace MultiShop
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
-            //app.Run(async (context) =>
-            //{
-            //    await context.Response.WriteAsync("Could Not Found");
-            //});
         }
     }
 }

@@ -1,10 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-namespace MultiShop.Models.Models.DTOs
+﻿namespace MultiShop.Models.Models.DTOs
 {
     public class CartDetailsDto
     {
-      
         public int CartDetailsId { get; set; }
         public int CartHeaderFId { get; set; }
         public int ProductFId { get; set; }

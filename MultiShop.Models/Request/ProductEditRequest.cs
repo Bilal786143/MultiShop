@@ -11,6 +11,5 @@ namespace MultiShop.Models.Request
         public decimal? DiscountPrice { get; set; }  
         public IFormFile ProductImage { get; set; }
         public int CatFId { get; set; }
-
     }
 }

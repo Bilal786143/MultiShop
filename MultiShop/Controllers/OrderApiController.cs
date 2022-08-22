@@ -16,7 +16,6 @@ namespace MultiShop.Controllers
         {
             _orderRepository = orderRepository;
         }
-
         [HttpGet]
         public async Task<ActionResult> Index()
         {
@@ -29,7 +28,6 @@ namespace MultiShop.Controllers
                 return BadRequest(ErrorResponse(ex));
             }
         }
-
         [HttpGet("{id:int}")]
         public async Task<ActionResult<Order>> GetOrderById(int id)
         {
@@ -47,7 +45,6 @@ namespace MultiShop.Controllers
                 return BadRequest(ErrorResponse(ex));
             }
         }
-
         [HttpPost]
         public async Task<ActionResult<Order>> CreateOrder(OrderCreateRequest order)
         {
@@ -65,7 +62,6 @@ namespace MultiShop.Controllers
                 return BadRequest(ErrorResponse(ex));
             }
         }
-
         [HttpPut]
         public async Task<ActionResult> EditOrder(OrderEditRequest order)
         {
@@ -83,7 +79,6 @@ namespace MultiShop.Controllers
                 return BadRequest(ErrorResponse(ex));
             }
         }
-
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> DeleteOrderById(int id)
         {
@@ -96,8 +91,7 @@ namespace MultiShop.Controllers
                     {
                         return NotFound();
                     }
-                  return Ok(  await _orderRepository.DeleteOrder(id));
-                   
+                    return Ok(await _orderRepository.DeleteOrder(id));
                 }
                 return NotFound();
             }
@@ -106,6 +100,5 @@ namespace MultiShop.Controllers
                 return BadRequest(ErrorResponse(ex));
             }
         }
-
     }
 }

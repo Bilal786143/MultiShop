@@ -1,9 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using MultiShop.DataAccess.Infrastructure.IRepository;
 using MultiShop.Models.Models.DTOs;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace MultiShop.Controllers
@@ -12,19 +10,17 @@ namespace MultiShop.Controllers
     [ApiController]
     public class CartApiController : BaseController
     {
-        
         private readonly ICartRepository _cart;
-      
-        public CartApiController(ICartRepository cart )
+        public CartApiController(ICartRepository cart)
         {
             _cart = cart;
         }
         [HttpGet("{userId}")]
-        public  async Task <ActionResult<CartDto>> GetCart(string userId)
+        public async Task<ActionResult<CartDto>> GetCart(string userId)
         {
             try
-            { 
-                return Ok( await _cart.GetCartByUserId(userId));
+            {
+                return Ok(await _cart.GetCartByUserId(userId));
             }
             catch (Exception ex)
             {
@@ -65,12 +61,12 @@ namespace MultiShop.Controllers
             catch (Exception ex)
             {
                 return BadRequest(ErrorResponse(ex));
-            }   
+            }
         }
         [HttpGet("{userId}")]
         public async Task<ActionResult<CartDto>> ClearCart(string userId)
         {
-           try
+            try
             {
                 return Ok(await _cart.ClearCart(userId));
             }
@@ -78,7 +74,6 @@ namespace MultiShop.Controllers
             {
                 return BadRequest(ErrorResponse(ex));
             }
-           
         }
     }
 }

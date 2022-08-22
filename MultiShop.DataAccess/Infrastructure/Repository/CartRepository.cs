@@ -28,11 +28,9 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
                 _context.CartHeader.Remove(cartHeaderfromDb);
                 await _context.SaveChangesAsync();
                 return true;
-
             }
             return false;
         }
-
         public async Task<CartDto> CreateUpdateCart(CartDto cartDto)
         {
             Cart cart = _mapper.Map<Cart>(cartDto);
@@ -54,24 +52,20 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
                 await _context.SaveChangesAsync();
 
                 //passing CartHeaderId from CartHeader To CartHeaderFid in CartDetails 
-
-                cart.CartDetails.FirstOrDefault().CartHeaderFId = cart.CartHeader.Id;
+cart.CartDetails.FirstOrDefault().CartHeaderFId = cart.CartHeader.Id;
                 cart.CartDetails.FirstOrDefault().Product = null;
 
                 //Add Cart Details 
-
                 _context.CartDetails.Add(cart.CartDetails.FirstOrDefault());
                 await _context.SaveChangesAsync();
             }
-
             //if Cart Header Is Not null
             //check if details have same product 
             else
             {
                 //To Get CartDetails From Database
                 var cartDetailsFromDb = await _context.CartDetails.AsNoTracking().FirstOrDefaultAsync(u => u.ProductFId == cart.CartDetails.FirstOrDefault().ProductFId && u.CartHeaderFId == carHeaderFromDb.Id);
-
-                if (cartDetailsFromDb == null)
+if (cartDetailsFromDb == null)
                 {
                     //create product Details 
                     cart.CartDetails.FirstOrDefault().CartHeaderFId = carHeaderFromDb.Id;
@@ -87,13 +81,9 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
                     _context.CartDetails.Update(cart.CartDetails.FirstOrDefault());
                     await _context.SaveChangesAsync();
                 }
-
             }
             return _mapper.Map<CartDto>(cart);
-
-
         }
-
         public async Task<CartDto> GetCartByUserId(string userId)
         {
             Cart cart = new()
@@ -103,7 +93,6 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
             cart.CartDetails = _context.CartDetails.Where(x => x.CartHeaderFId == cart.CartHeader.Id).Include(u => u.Product);
             return _mapper.Map<CartDto>(cart);
         }
-
         public async Task<bool> RemoveFromCart(int cartDetailsId)
         {
             try
@@ -124,8 +113,5 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
                 return false;
             }
         }
-
     }
-
-
 }

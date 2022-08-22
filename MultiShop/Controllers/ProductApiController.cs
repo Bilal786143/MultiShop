@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using MultiShop.DataAccess.Infrastructure.IRepository;
 using MultiShop.Models.Request;
 using MultiShop.Models.Models;
@@ -12,28 +11,26 @@ namespace MultiShop.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class ProductApiController :BaseController
+    public class ProductApiController : BaseController
     {
         private readonly IProductRepository _products;
         private readonly IWebHostEnvironment _webHostEnvironment;
-
         public ProductApiController(IProductRepository products, IWebHostEnvironment webHostEnvironment)
         {
             _products = products;
             _webHostEnvironment = webHostEnvironment;
         }
-
         [HttpGet]
         public async Task<IActionResult> GetProductsList()
         {
             try
             {
-                var product= await _products.GetProducts();
+                var product = await _products.GetProducts();
                 foreach (var item in product)
                 {
                     item.ProductImagePath = _webHostEnvironment.WebRootPath + item.ProductImagePath;
                 }
-                    return Ok(product);
+                return Ok(product);
             }
             catch (Exception ex)
             {
@@ -57,9 +54,7 @@ namespace MultiShop.Controllers
                 return BadRequest(ErrorResponse(ex));
             }
         }
-
         [HttpPost]
-
         public async Task<ActionResult<Product>> CreateProducts([FromForm] ProductCreateRequest product)
         {
             try
@@ -90,10 +85,9 @@ namespace MultiShop.Controllers
             }
             catch (Exception ex)
             {
-              return BadRequest(ErrorResponse(ex));
+                return BadRequest(ErrorResponse(ex));
             }
         }
-
         [HttpPut]
         public async Task<IActionResult> EditProducts(ProductEditRequest product)
         {
@@ -120,8 +114,7 @@ namespace MultiShop.Controllers
                 {
                     return NotFound();
                 }
-              return Ok(await _products.DeleteProducts(id));
-              
+                return Ok(await _products.DeleteProducts(id));
             }
             catch (Exception ex)
             {

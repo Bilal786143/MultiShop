@@ -8,9 +8,8 @@ using System.Threading.Tasks;
 
 namespace MultiShop.Controllers
 {
-   
     public class BaseController : ControllerBase
-    { 
+    {
         public static object ErrorResponse(Exception ex)
         {
             return (StatusCodes.Status500InternalServerError, ex.Message);
