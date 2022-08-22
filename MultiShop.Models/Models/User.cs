@@ -7,7 +7,7 @@ namespace MultiShop.Models.Models
     public class User
     {
         [Required(ErrorMessage = "Full Name Is Required"), Display(Name = "Full Name")]
-        string Name { get; set; }
+        public string Name { get; set; }
         [Required(ErrorMessage = "Email Address Is Required"), Display(Name = "Email Address")]
         [EmailAddress]
         [RegularExpression("^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$", ErrorMessage = "Must be a valid email")]
