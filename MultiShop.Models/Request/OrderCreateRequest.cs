@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace MultiShop.Models.Request
 {
@@ -15,6 +14,5 @@ namespace MultiShop.Models.Request
         public string OrderType { get; set; }
         public string UserFid { get; set; }
         public int ProductFId { get; set; }
-
     }
 }

@@ -11,7 +11,5 @@ namespace MultiShop.DataAccess.Infrastructure.IRepository
         Task<IEnumerable<OrderDetails>> GetAllOrdersDetails();
         Task<OrderDetails> GetOrderDetailsById(int id);
         Task<OrderdetailsResponse> CreateOrderDetails(OrderDetailsRequest request);
-       
-        
     }
 }

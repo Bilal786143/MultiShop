@@ -11,6 +11,5 @@ namespace MultiShop.DataAccess.Infrastructure.IRepository
         Task<LoginResponse> Login(Login login);
         Task LogOut();
         Task<string> GetLoginUserId(string email);
-
     }
 }

@@ -15,7 +15,6 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
         {
             _userManager = userManager;
             _signInManager = signInManager;
-     
         }
         public async Task<IdentityResult> CreateUserAsync(User user)
         {
@@ -60,7 +59,6 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
         {
             var user = await _userManager.FindByEmailAsync(email);
             return user.Id;
-
         }
     }
 }

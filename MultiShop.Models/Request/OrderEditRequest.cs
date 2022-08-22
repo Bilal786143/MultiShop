@@ -13,6 +13,6 @@ namespace MultiShop.Models.Request
         public double GrandTotal { get; set; }
         public DateTime OrderDate { get; set; }
         public string OrderType { get; set; }
-        public string UserFid { get; set; }      
+        public string UserFid { get; set; }   
     }
 }

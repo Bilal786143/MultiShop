@@ -11,12 +11,10 @@ namespace MultiShop.Controllers
     public class CategoryApiController : BaseController
     {
         private readonly ICategoryRepository _categoryRepository;
-
         public CategoryApiController(ICategoryRepository categoryRepository)
         {
             _categoryRepository = categoryRepository;
         }
-
         [HttpGet]
         public async Task<ActionResult> Index()
         {
@@ -26,10 +24,9 @@ namespace MultiShop.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest( ErrorResponse(ex));
+                return BadRequest(ErrorResponse(ex));
             }
         }
-
         [HttpGet("{id:int}")]
         public async Task<ActionResult<Category>> GetCategoryById(int id)
         {
@@ -40,7 +37,6 @@ namespace MultiShop.Controllers
                 {
                     return NotFound();
                 }
-
                 return Ok(await _categoryRepository.GetCategoryById(id));
             }
             catch (Exception ex)
@@ -48,7 +44,6 @@ namespace MultiShop.Controllers
                 return BadRequest(ErrorResponse(ex));
             }
         }
-
         [HttpPost]
         public async Task<ActionResult<Category>> CreateCategory(Category category)
         {
@@ -66,7 +61,6 @@ namespace MultiShop.Controllers
                 return BadRequest(ErrorResponse(ex));
             }
         }
-
         [HttpPost]
         public async Task<ActionResult<Category>> UpdateCategory(Category category)
         {
@@ -84,7 +78,6 @@ namespace MultiShop.Controllers
                 return BadRequest(ErrorResponse(ex));
             }
         }
-
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> DeleteCategoryById(int id)
         {
@@ -95,14 +88,12 @@ namespace MultiShop.Controllers
                 {
                     return NotFound();
                 }
-               return Ok( await _categoryRepository.DeleteCategoryById(id));
-             
+                return Ok(await _categoryRepository.DeleteCategoryById(id));
             }
             catch (Exception ex)
             {
                 return BadRequest(ErrorResponse(ex));
             }
         }
-
     }
 }

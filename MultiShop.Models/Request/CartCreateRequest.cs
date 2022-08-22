@@ -1,5 +1,4 @@
-﻿
-namespace MultiShop.Models.Request
+﻿namespace MultiShop.Models.Request
 {
     public class CartCreateRequest
     {

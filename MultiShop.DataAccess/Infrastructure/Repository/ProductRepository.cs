@@ -15,7 +15,7 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
         public ProductRepository(ApplicationDbContext dbcontext)
         {
             _dbcontext = dbcontext;
-        }               
+        } 
         public async Task<Product> CreateProduct(ProductCreateRequest request,string picPath)
         {
             var product = new Product
@@ -67,7 +67,6 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
         {
             return _dbcontext.Product.Any(x => x.Id == id);
         }
-
         public async Task<IEnumerable<Product>> GetProducts()
         {
             return await _dbcontext.Product.ToListAsync();

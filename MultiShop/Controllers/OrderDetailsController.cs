@@ -1,10 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using MultiShop.DataAccess.Infrastructure.IRepository;
 using MultiShop.Models.Request;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace MultiShop.Controllers
@@ -14,7 +11,6 @@ namespace MultiShop.Controllers
     public class OrderDetailsController : BaseController
     {
         private readonly IOrderDetailsRepository _orderDetails;
-
         public OrderDetailsController(IOrderDetailsRepository orderDetails)
         {
             _orderDetails = orderDetails;
@@ -24,11 +20,11 @@ namespace MultiShop.Controllers
         {
             try
             {
-                return Ok( await _orderDetails.GetAllOrdersDetails());
+                return Ok(await _orderDetails.GetAllOrdersDetails());
             }
             catch (Exception ex)
             {
-               return BadRequest(ErrorResponse(ex));
+                return BadRequest(ErrorResponse(ex));
             }
         }
         [HttpPost]
@@ -45,15 +41,14 @@ namespace MultiShop.Controllers
             catch (Exception ex)
             {
                 return BadRequest(ErrorResponse(ex));
-
             }
         }
         [HttpGet("{id:int}")]
-        public async Task<IActionResult> GetOrderDetailsById(int id )
+        public async Task<IActionResult> GetOrderDetailsById(int id)
         {
             try
             {
-                return Ok( await _orderDetails.GetOrderDetailsById(id));
+                return Ok(await _orderDetails.GetOrderDetailsById(id));
             }
             catch (Exception ex)
             {
