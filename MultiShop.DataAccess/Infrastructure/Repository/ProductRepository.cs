@@ -12,9 +12,6 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
     public class ProductRepository : IProductRepository
     {
         private readonly ApplicationDbContext _dbcontext;
-        
-        
-
         public ProductRepository(ApplicationDbContext dbcontext)
         {
             _dbcontext = dbcontext;
@@ -34,7 +31,6 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
             await _dbcontext.SaveChangesAsync();
             return product;
         }
-
         public async Task<bool> DeleteProducts(int id)
         {
             var result = await _dbcontext.Product.FirstOrDefaultAsync(x => x.Id == id);
@@ -42,7 +38,6 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
             await _dbcontext.SaveChangesAsync();
             return true;
         }
-
         public async Task<Product> EditProduct(ProductEditRequest request)
         {
             var product = new Product
@@ -59,7 +54,6 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
             await _dbcontext.SaveChangesAsync();
             return product;
         }
-
         public async Task<Product> GetProductById(int id)
         {
             var result = await _dbcontext.Product.FirstOrDefaultAsync(x => x.Id == id);

@@ -1,30 +1,15 @@
 ﻿using Microsoft.AspNetCore.Http;
-using System.ComponentModel.DataAnnotations;
 
 namespace MultiShop.Models.Request
 {
     public class ProductEditRequest
-    {
-        [Key]
-        public int Id { get; set; }
-        [Required(ErrorMessage = "Product Name Is Required"), Display(Name = "Product Name")]
-        [MaxLength(100, ErrorMessage = "Product Name is not Greater than 100")]
+    { 
+        public int Id { get; set; } 
         public string Name { get; set; }
-
-        [Required(ErrorMessage = "Product Description Is Required"), Display(Name = "Product Description")]
-        [MaxLength(500, ErrorMessage = "Product Description is not Greater than 500")]
         public string Description { get; set; }
-
-
-        [Required(ErrorMessage = "Product Sale Price Is Required"), Display(Name = "Product Price")]
-
         public decimal SalePrice { get; set; }
-
-        [Display(Name = "Product Discount Price (Optional)")]
-        public decimal? DiscountPrice { get; set; }
-        [Required(ErrorMessage = "Product Image Is Required"), Display(Name = "Product Image")]
+        public decimal? DiscountPrice { get; set; }  
         public IFormFile ProductImage { get; set; }
-
         public int CatFId { get; set; }
 
     }

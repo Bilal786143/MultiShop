@@ -41,9 +41,7 @@ namespace MultiShop.DataAccess.Infrastructure.Repository
         public async Task<IEnumerable<OrderDetails>> GetAllOrdersDetails()
         {
           return await _context.OrderDetails.ToListAsync();
-        
         }
-
         public async  Task<OrderDetails> GetOrderDetailsById(int id)
         {
             var result =  await _context.OrderDetails.FirstOrDefaultAsync(x => x.Id == id);
